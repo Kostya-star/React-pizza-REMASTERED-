@@ -63,10 +63,7 @@ export const Pizza: FC<IPizzaProps> = ({
       </div>
       <div className={s.pizza__bottom}>
         <div className={s.pizza__price}>от {price} ₽</div>
-        <button
-          onClick={onAddPizza}
-          className="button button--outline button--add"
-        >
+        <button onClick={onAddPizza}>
           <AddPizzaSVG />
           <span>Добавить {addPizza}</span>
         </button>
