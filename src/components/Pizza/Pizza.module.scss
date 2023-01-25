@@ -1,6 +1,4 @@
-@import '../variables';
-
-.pizza-block {
+.pizza {
   width: 280px;
   text-align: center;
   margin-bottom: 65px;
@@ -41,7 +39,7 @@
         cursor: pointer;
         font-weight: 600;
         font-size: 14px;
-        @include noselect();
+
         &.active {
           background: #ffffff;
           box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);

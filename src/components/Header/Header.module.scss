@@ -1,19 +1,15 @@
-@import '../variables';
-
 .header {
-  border-bottom: 1px solid $gray-line;
+  border-bottom: 1px solid #f6f6f6;
   padding: 40px 0;
-
-  .container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   &__logo {
     display: flex;
 
-    img {
+    svg {
+      width: 55px;
       margin-right: 15px;
     }
 

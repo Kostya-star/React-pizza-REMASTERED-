@@ -1,7 +1,6 @@
-@import '../variables';
-
 .sort {
   position: relative;
+
   &__label {
     display: flex;
     align-items: center;
@@ -15,8 +14,8 @@
     }
 
     span {
-      color: $orange;
-      border-bottom: 1px dashed $orange;
+      color: #fe5f1e;
+      border-bottom: 1px dashed #fe5f1e;
       cursor: pointer;
     }
   }
@@ -34,6 +33,7 @@
 
     ul {
       overflow: hidden;
+
       li {
         padding: 12px 20px;
         cursor: pointer;
@@ -45,7 +45,7 @@
 
         &.active {
           font-weight: bold;
-          color: $orange;
+          color: #fe5f1e;
         }
       }
     }
