@@ -1,8 +1,15 @@
 import pizza from 'assets/png/pizza.jpg';
 import { ReactComponent as AddPizzaSVG } from 'assets/svg/add-pizza.svg';
-import s from './Pizza.module.scss'
+import { useState } from 'react';
+import s from './Pizza.module.scss';
 
 export const Pizza = () => {
+  const [addPizza, setAddPizza] = useState(0);
+
+  const onAddPizza = () => {
+    setAddPizza(addPizza + 1);
+  };
+
   return (
     <div className={s.pizza}>
       <a href="/pizza/8">
@@ -22,9 +29,12 @@ export const Pizza = () => {
       </div>
       <div className={s.pizza__bottom}>
         <div className={s.pizza__price}>от 395 ₽</div>
-        <button className="button button--outline button--add">
+        <button
+          onClick={onAddPizza}
+          className="button button--outline button--add"
+        >
           <AddPizzaSVG />
-          <span>Добавить</span>
+          <span>Добавить {addPizza}</span>
         </button>
       </div>
     </div>
