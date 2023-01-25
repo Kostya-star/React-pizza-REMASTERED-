@@ -1,18 +1,10 @@
 import { ReactComponent as AddPizzaSVG } from 'assets/svg/add-pizza.svg';
 import { FC } from 'react';
 import { useState } from 'react';
+import { IPizza } from 'types';
 import s from './Pizza.module.scss';
 
-interface IPizzaProps {
-  id: number;
-  imageUrl: string;
-  title: string;
-  types: number[];
-  sizes: number[];
-  price: number;
-  category: number;
-  rating: number;
-}
+interface IPizzaProps extends IPizza {}
 
 const pizzaTypes = ['тонкое', 'традиционное'];
 
