@@ -19,7 +19,9 @@ export const SortDropdown = () => {
       <div className={s.sort__label}>
         {isVisible ? <SortDownSVG /> : <SortUpSVG />}
         <b>Сортировка по:</b>
-        <span onClick={() => setVisible(!isVisible)}>популярности</span>
+        <span onClick={() => setVisible(!isVisible)}>
+          {dropDownOptions[selectedOption]}
+        </span>
       </div>
       {isVisible && (
         <div className={s.sort__popup}>

@@ -26,3 +26,21 @@
     }
   }
 }
+
+// MEDIA 
+
+@media (max-width: 1400px) {
+  .categories {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 1150px) {
+  .categories {
+    width: 500px;
+    overflow: auto;
+    ul {
+      width: 785px;
+    }
+  }
+}

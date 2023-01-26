@@ -1,6 +1,5 @@
 import { ReactComponent as AddPizzaSVG } from 'assets/svg/add-pizza.svg';
-import { FC } from 'react';
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { IPizza } from 'types';
 import s from './Pizza.module.scss';
 
@@ -25,40 +24,42 @@ export const Pizza: FC<IPizzaProps> = ({
 
   return (
     <div className={s.pizza}>
-      <a href="/pizza/8">
-        <img className={s.pizza__image} src={imageUrl} alt="Pizza" />
-        <h4 className={s.pizza__title}>{title}</h4>
-      </a>
-      <div className={s.pizza__selector}>
-        <ul>
-          {types.map((type) => (
-            <li
-              key={type}
-              onClick={() => setSelectedPizzaType(type)}
-              className={selectedPizzaType === type ? `${s.active}` : ''}
-            >
-              {pizzaTypes[type]}
-            </li>
-          ))}
-        </ul>
-        <ul>
-          {sizes.map((size, index) => (
-            <li
-              key={size}
-              onClick={() => setSelectedPizzaSize(index)}
-              className={selectedPizzaSize === index ? `${s.active}` : ''}
-            >
-              {size} см.
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className={s.pizza__bottom}>
-        <div className={s.pizza__price}>от {price} ₽</div>
-        <button onClick={onAddPizza}>
-          <AddPizzaSVG />
-          <span>Добавить {addPizza}</span>
-        </button>
+      <div className={s.pizza__container}>
+        <a href="/pizza/8">
+          <img className={s.pizza__image} src={imageUrl} alt="Pizza" />
+          <h4 className={s.pizza__title}>{title}</h4>
+        </a>
+        <div className={s.pizza__selector}>
+          <ul>
+            {types.map((type) => (
+              <li
+                key={type}
+                onClick={() => setSelectedPizzaType(type)}
+                className={selectedPizzaType === type ? `${s.active}` : ''}
+              >
+                {pizzaTypes[type]}
+              </li>
+            ))}
+          </ul>
+          <ul>
+            {sizes.map((size, index) => (
+              <li
+                key={size}
+                onClick={() => setSelectedPizzaSize(index)}
+                className={selectedPizzaSize === index ? `${s.active}` : ''}
+              >
+                {size} см.
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className={s.pizza__bottom}>
+          <div className={s.pizza__price}>от {price} ₽</div>
+          <button onClick={onAddPizza}>
+            <AddPizzaSVG />
+            <span>Добавить {addPizza}</span>
+          </button>
+        </div>
       </div>
     </div>
   );
