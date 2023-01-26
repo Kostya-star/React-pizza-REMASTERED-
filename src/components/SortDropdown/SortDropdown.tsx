@@ -1,16 +1,38 @@
 import { ReactComponent as SortUpSVG } from 'assets/svg/sort-up.svg';
 import { ReactComponent as SortDownSVG } from 'assets/svg/sort-down.svg';
 import s from './SortDropdown.module.scss';
-import { useState } from 'react';
+import { useState, FC } from 'react';
+import { ISortOption } from 'types';
 
-const dropDownOptions = ['популярности', 'цене', 'алфавиту'];
+const dropDownOptions = [
+  {
+    value: 'rating',
+    label: 'rating',
+  },
+  {
+    value: 'price',
+    label: 'price',
+  },
+  {
+    value: 'title',
+    label: 'abc',
+  },
+];
 
-export const SortDropdown = () => {
+
+interface ISortDropdownProps {
+  selectedSort: ISortOption;
+  setSelectedSort: (sort: ISortOption) => void;
+}
+
+export const SortDropdown: FC<ISortDropdownProps> = ({
+  selectedSort,
+  setSelectedSort,
+}) => {
   const [isVisible, setVisible] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(0);
 
-  const onSelectOption = (index: number) => {
-    setSelectedOption(index);
+  const onSelectOption = (sortObj: ISortOption) => {
+    setSelectedSort(sortObj);
     setVisible(false);
   };
 
@@ -18,21 +40,21 @@ export const SortDropdown = () => {
     <div className={s.sort}>
       <div className={s.sort__label}>
         {isVisible ? <SortDownSVG /> : <SortUpSVG />}
-        <b>Сортировка по:</b>
+        <b>Sort by:</b>
         <span onClick={() => setVisible(!isVisible)}>
-          {dropDownOptions[selectedOption]}
+          {selectedSort.label ?? 'Click here'}
         </span>
       </div>
       {isVisible && (
         <div className={s.sort__popup}>
           <ul>
-            {dropDownOptions.map((option, index) => (
+            {dropDownOptions.map((sortObj, index) => (
               <li
                 key={index}
-                onClick={() => onSelectOption(index)}
-                className={selectedOption === index ? `${s.active}` : ''}
+                onClick={() => onSelectOption(sortObj)}
+                className={selectedSort === sortObj ? `${s.active}` : ''}
               >
-                {option}
+                {sortObj.label}
               </li>
             ))}
           </ul>
