@@ -4,17 +4,26 @@ import { Pizza } from 'components/Pizza/Pizza';
 import { Skeleton } from 'components/Skeleton/Skeleton';
 import { SortDropdown } from 'components/SortDropdown/SortDropdown';
 import { useEffect, useState } from 'react';
-import { IPizza } from 'types';
+import { IPizza, ISortOption } from 'types';
 import { baseRequest } from './../api/baseRequest';
+import {useNavigate} from "react-router-dom"
 
 export const Home = () => {
   const [pizzas, setPizzas] = useState<IPizza[]>([]);
   const [isLoading, setLoading] = useState(false);
+  const [selectedSort, setSelectedSort] = useState({} as ISortOption);
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     setLoading(true);
+    
     const fetchPizzas = async () => {
-      const resp = await axios.get(`${baseRequest}pizzas`).catch((e) => {
+      const resp = await axios.get(`${baseRequest}pizzas`, {
+        params: {
+          ...(selectedSort.value ? { sortBy: selectedSort.value} : {})
+        }
+      }).catch((e) => {
         alert('smth went wrong');
         console.log(e);
       });
@@ -23,16 +32,17 @@ export const Home = () => {
         setPizzas(resp.data);
         setLoading(false);
       }
+      // navigate(`/${selectedSort && `?sortBy=${selectedSort}`}`)
     };
     fetchPizzas();
-  }, []);
+  }, [selectedSort]);
 
 
   return (
     <>
       <div className="content__top">
-        <Categories/>
-        <SortDropdown />
+        <Categories />
+        <SortDropdown selectedSort={selectedSort} setSelectedSort={setSelectedSort}/>
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
