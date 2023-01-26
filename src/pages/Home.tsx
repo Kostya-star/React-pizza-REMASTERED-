@@ -17,6 +17,7 @@ export const Home = () => {
 
   useEffect(() => {
     setLoading(true);
+    
     const fetchPizzas = async () => {
       const resp = await axios.get(`${baseRequest}pizzas`, {
         params: {
