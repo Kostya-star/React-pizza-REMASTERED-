@@ -27,10 +27,11 @@ export const Home = () => {
     fetchPizzas();
   }, []);
 
+
   return (
     <>
       <div className="content__top">
-        <Categories />
+        <Categories/>
         <SortDropdown />
       </div>
       <h2 className="content__title">Все пиццы</h2>

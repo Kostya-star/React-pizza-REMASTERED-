@@ -10,6 +10,7 @@ const pizzaTypes = [
   'Закрытые',
 ];
 
+
 export const Categories = () => {
   const [selectedPizzaType, setSelectedPizzaType] = useState(0);
 
