@@ -1,27 +1,22 @@
-import { useState } from 'react';
+import { FC } from 'react';
 import s from './Categories.module.scss';
 
-const pizzaTypes = [
-  'Все',
-  'Мясные',
-  'Вегетарианская',
-  'Гриль',
-  'Острые',
-  'Закрытые',
-];
+const pizzaTypes = ['All', 'Meat', 'Vegetarian', 'Spicy', 'Mixed'];
 
+interface ICategoriesProps {
+  category: number;
+  setCategory: (category: number) => void;
+}
 
-export const Categories = () => {
-  const [selectedPizzaType, setSelectedPizzaType] = useState(0);
-
+export const Categories: FC<ICategoriesProps> = ({ category, setCategory }) => {
   return (
     <div className={s.categories}>
       <ul>
         {pizzaTypes.map((pizza, index) => (
           <li
             key={index}
-            onClick={() => setSelectedPizzaType(index)}
-            className={index === selectedPizzaType ? `${s.active}` : ''}
+            onClick={() => setCategory(index)}
+            className={index === category ? `${s.active}` : ''}
           >
             {pizza}
           </li>

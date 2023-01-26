@@ -1,8 +1,8 @@
-import { ReactComponent as SortUpSVG } from 'assets/svg/sort-up.svg';
 import { ReactComponent as SortDownSVG } from 'assets/svg/sort-down.svg';
-import s from './SortDropdown.module.scss';
-import { useState, FC } from 'react';
+import { ReactComponent as SortUpSVG } from 'assets/svg/sort-up.svg';
+import { FC, useState } from 'react';
 import { ISortOption } from 'types';
+import s from './SortDropdown.module.scss';
 
 const dropDownOptions = [
   {
