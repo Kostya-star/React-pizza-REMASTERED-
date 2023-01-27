@@ -2,18 +2,25 @@ import { FC } from 'react';
 import s from './Pagination.module.scss';
 
 interface IPaginationProps {
+  currentPage: number;
   setCurrentPage: (page: number | ((prev: number) => number)) => void;
 }
 
-export const Pagination: FC<IPaginationProps> = ({ setCurrentPage }) => {
+export const Pagination: FC<IPaginationProps> = ({
+  currentPage,
+  setCurrentPage,
+}) => {
   // const pagesArr = Array.from(Array(Math.ceil(pages)).keys());
   const pagesArr = Array.from(Array(3).keys());
 
   return (
     <div className={s.pages}>
-      <span onClick={() => setCurrentPage((prev) => {
-        return prev <= 1 ? 1 : prev - 1
-      })}>&#10094;</span>
+      <button
+        disabled={currentPage === 1}
+        onClick={() => setCurrentPage(currentPage - 1)}
+      >
+        &#10094;
+      </button>
       <ul>
         {pagesArr.map((page) => (
           <li key={page + 1} onClick={() => setCurrentPage(page + 1)}>
@@ -21,9 +28,12 @@ export const Pagination: FC<IPaginationProps> = ({ setCurrentPage }) => {
           </li>
         ))}
       </ul>
-      <span onClick={() => setCurrentPage((prev) => {
-        return prev >= 3 ? 3 : prev + 1
-      })}>&#10095;</span>
+      <button
+        disabled={currentPage === 3}
+        onClick={() => setCurrentPage(currentPage + 1)}
+      >
+        &#10095;
+      </button>
     </div>
   );
 };

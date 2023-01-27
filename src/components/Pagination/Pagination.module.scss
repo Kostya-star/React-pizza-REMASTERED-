@@ -2,7 +2,10 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  span {
+  button {
+    appearance: none;
+    border: none;
+    background-color: transparent;
     cursor: pointer;
     font-size: 30px;
     color: #fe5f1e;
@@ -13,10 +16,16 @@
 
     li {
       padding: 10px;
-      color: white;
-      background-color: #fe5f1e;
+      color: #fe5f1e;
+      background-color: white;
+      border: 1px solid #fe5f1e;
       border-radius: 5px;
       cursor: pointer;
+      transition: .2s all;
+      &:hover {
+        color: white;
+        background-color: #fe5f1e;
+      }
     }
   }
 }

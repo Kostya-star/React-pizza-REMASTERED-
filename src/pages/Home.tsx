@@ -9,9 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import { IPizza, ISortOption } from 'types';
 import { baseRequest } from './../api/baseRequest';
 
-
 interface IHomeProps {
-  searchVal: string
+  searchVal: string;
 }
 
 export const Home: FC<IHomeProps> = ({ searchVal }) => {
@@ -50,7 +49,6 @@ export const Home: FC<IHomeProps> = ({ searchVal }) => {
     };
     fetchPizzas();
   }, [pizzaCategory, selectedSort, searchVal, currentPage]);
-  console.log(pizzas);
 
   return (
     <>
@@ -67,7 +65,7 @@ export const Home: FC<IHomeProps> = ({ searchVal }) => {
           ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
           : pizzas.map((pizza) => <Pizza key={pizza.id} {...pizza} />)}
       </div>
-      <Pagination setCurrentPage={setCurrentPage}/>
+      <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
     </>
   );
 };
