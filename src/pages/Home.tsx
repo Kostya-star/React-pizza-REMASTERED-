@@ -1,19 +1,17 @@
+import { SearchContext } from 'App';
 import axios from 'axios';
 import { Categories } from 'components/Categories/Categories';
 import { Pagination } from 'components/Pagination/Pagination';
 import { Pizza } from 'components/Pizza/Pizza';
 import { Skeleton } from 'components/Skeleton/Skeleton';
 import { SortDropdown } from 'components/SortDropdown/SortDropdown';
-import { useEffect, useState, FC } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IPizza, ISortOption } from 'types';
 import { baseRequest } from './../api/baseRequest';
 
-interface IHomeProps {
-  searchVal: string;
-}
-
-export const Home: FC<IHomeProps> = ({ searchVal }) => {
+export const Home: FC = () => {
+  const { searchVal } = useContext(SearchContext);
   const [pizzas, setPizzas] = useState<IPizza[]>([]);
   const [isLoading, setLoading] = useState(false);
   const [pizzaCategory, setPizzaCategory] = useState(0);

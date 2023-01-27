@@ -5,12 +5,8 @@ import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import s from './Header.module.scss';
 
-interface IHeaderProps {
-  searchVal: string;
-  setSearchVal: (val: string) => void
-}
 
-export const Header: FC<IHeaderProps> = ({ searchVal, setSearchVal }) => {
+export const Header: FC = () => {
   return (
     <div className={s.header}>
       <Link to="">
@@ -22,7 +18,7 @@ export const Header: FC<IHeaderProps> = ({ searchVal, setSearchVal }) => {
           </div>
         </div>
       </Link>
-      <InputSearch searchVal={searchVal} setSearchVal={setSearchVal}/>
+      <InputSearch/>
       <div className="header__cart">
         <Link to="/cart" className="button button--cart">
           <span>520 ₽</span>
