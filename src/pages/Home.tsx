@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Categories } from 'components/Categories/Categories';
+import { Pagination } from 'components/Pagination/Pagination';
 import { Pizza } from 'components/Pizza/Pizza';
 import { Skeleton } from 'components/Skeleton/Skeleton';
 import { SortDropdown } from 'components/SortDropdown/SortDropdown';
@@ -18,6 +19,7 @@ export const Home: FC<IHomeProps> = ({ searchVal }) => {
   const [isLoading, setLoading] = useState(false);
   const [pizzaCategory, setPizzaCategory] = useState(0);
   const [selectedSort, setSelectedSort] = useState({} as ISortOption);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const navigate = useNavigate();
 
@@ -31,6 +33,8 @@ export const Home: FC<IHomeProps> = ({ searchVal }) => {
             ...(pizzaCategory > 0 ? { category: pizzaCategory } : {}),
             ...(selectedSort.value ? { sortBy: selectedSort.value } : {}),
             ...(searchVal ? { search: searchVal } : {}),
+            page: currentPage,
+            limit: 4,
           },
         })
         .catch((e) => {
@@ -45,7 +49,8 @@ export const Home: FC<IHomeProps> = ({ searchVal }) => {
       // navigate(`/${selectedSort && `?sortBy=${selectedSort}`}`)
     };
     fetchPizzas();
-  }, [pizzaCategory, selectedSort, searchVal]);
+  }, [pizzaCategory, selectedSort, searchVal, currentPage]);
+  console.log(pizzas);
 
   return (
     <>
@@ -62,6 +67,7 @@ export const Home: FC<IHomeProps> = ({ searchVal }) => {
           ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
           : pizzas.map((pizza) => <Pizza key={pizza.id} {...pizza} />)}
       </div>
+      <Pagination setCurrentPage={setCurrentPage}/>
     </>
   );
 };

@@ -1,0 +1,22 @@
+.pages {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  span {
+    cursor: pointer;
+    font-size: 30px;
+    color: #fe5f1e;
+  }
+  ul {
+    display: flex;
+    gap: 10px;
+
+    li {
+      padding: 10px;
+      color: white;
+      background-color: #fe5f1e;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
+}
