@@ -3,12 +3,17 @@ import { Categories } from 'components/Categories/Categories';
 import { Pizza } from 'components/Pizza/Pizza';
 import { Skeleton } from 'components/Skeleton/Skeleton';
 import { SortDropdown } from 'components/SortDropdown/SortDropdown';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IPizza, ISortOption } from 'types';
 import { baseRequest } from './../api/baseRequest';
 
-export const Home = () => {
+
+interface IHomeProps {
+  searchVal: string
+}
+
+export const Home: FC<IHomeProps> = ({ searchVal }) => {
   const [pizzas, setPizzas] = useState<IPizza[]>([]);
   const [isLoading, setLoading] = useState(false);
   const [pizzaCategory, setPizzaCategory] = useState(0);
@@ -25,6 +30,7 @@ export const Home = () => {
           params: {
             ...(pizzaCategory > 0 ? { category: pizzaCategory } : {}),
             ...(selectedSort.value ? { sortBy: selectedSort.value } : {}),
+            ...(searchVal ? { search: searchVal } : {}),
           },
         })
         .catch((e) => {
@@ -39,7 +45,7 @@ export const Home = () => {
       // navigate(`/${selectedSort && `?sortBy=${selectedSort}`}`)
     };
     fetchPizzas();
-  }, [pizzaCategory, selectedSort]);
+  }, [pizzaCategory, selectedSort, searchVal]);
 
   return (
     <>

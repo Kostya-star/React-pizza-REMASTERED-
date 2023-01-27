@@ -1,9 +1,16 @@
 import { ReactComponent as CartSVG } from 'assets/svg/cart.svg';
 import { ReactComponent as PizzaLogo } from 'assets/svg/pizza-logo.svg';
-import s from './Header.module.scss';
+import { InputSearch } from 'components/InputSearch/InputSearch';
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
+import s from './Header.module.scss';
 
-export const Header = () => {
+interface IHeaderProps {
+  searchVal: string;
+  setSearchVal: (val: string) => void
+}
+
+export const Header: FC<IHeaderProps> = ({ searchVal, setSearchVal }) => {
   return (
     <div className={s.header}>
       <Link to="">
@@ -15,6 +22,7 @@ export const Header = () => {
           </div>
         </div>
       </Link>
+      <InputSearch searchVal={searchVal} setSearchVal={setSearchVal}/>
       <div className="header__cart">
         <Link to="/cart" className="button button--cart">
           <span>520 ₽</span>

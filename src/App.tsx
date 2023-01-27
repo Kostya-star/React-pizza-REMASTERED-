@@ -7,7 +7,8 @@ import { Header } from './components/Header/Header';
 import './scss/app.scss';
 
 const App = () => {
-  const[searchVal, setSearchVal] = useState()
+  const[searchVal, setSearchVal] = useState('')
+  
   return (
     <div className="wrapper">
       <div className="container">
