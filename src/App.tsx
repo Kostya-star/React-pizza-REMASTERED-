@@ -11,7 +11,7 @@ interface ISearchContext {
   setSearchVal: (val: string) => void
 }
 
-export const SearchContext = createContext({} as ISearchContext);
+export const SearchContext = createContext({} as ISearchContext)
 
 const App = () => {
   const [searchVal, setSearchVal] = useState('');

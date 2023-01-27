@@ -7,16 +7,16 @@ import s from './SortDropdown.module.scss';
 const dropDownOptions = [
   {
     value: 'rating',
-    label: 'rating',
+    label: 'rating'
   },
   {
     value: 'price',
-    label: 'price',
+    label: 'price'
   },
   {
     value: 'title',
-    label: 'abc',
-  },
+    label: 'abc'
+  }
 ];
 
 interface ISortDropdownProps {
@@ -26,7 +26,7 @@ interface ISortDropdownProps {
 
 export const SortDropdown: FC<ISortDropdownProps> = ({
   selectedSort,
-  setSelectedSort,
+  setSelectedSort
 }) => {
   const [isVisible, setVisible] = useState(false);
 

@@ -39,13 +39,13 @@ export const Home: FC = () => {
           console.log(e);
         });
 
-      if (resp && resp.data.length) {
+      if (resp?.data.length) {
         setPizzas(resp.data);
         setLoading(false);
       }
       // navigate(`/${selectedSort && `?sortBy=${selectedSort}`}`)
     };
-    fetchPizzas();
+    void fetchPizzas();
   }, [pizzaCategory, selectedSort, searchVal, currentPage]);
 
   return (

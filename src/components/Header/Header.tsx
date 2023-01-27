@@ -5,7 +5,6 @@ import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import s from './Header.module.scss';
 
-
 export const Header: FC = () => {
   return (
     <div className={s.header}>
