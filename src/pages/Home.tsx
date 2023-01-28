@@ -1,4 +1,3 @@
-import { SearchContext } from 'App';
 import axios from 'axios';
 import { Categories } from 'components/Categories/Categories';
 import { Pagination } from 'components/Pagination/Pagination';
@@ -7,18 +6,18 @@ import { Skeleton } from 'components/Skeleton/Skeleton';
 import { SortDropdown } from 'components/SortDropdown/SortDropdown';
 import { FC, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { IPizza, ISortOption } from 'types';
 import { baseRequest } from './../api/baseRequest';
 
 export const Home: FC = () => {
-  const { searchVal } = useContext(SearchContext);
   const [pizzas, setPizzas] = useState<IPizza[]>([]);
   const [isLoading, setLoading] = useState(false);
   const [pizzaCategory, setPizzaCategory] = useState(0);
   const [selectedSort, setSelectedSort] = useState({} as ISortOption);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const navigate = useNavigate();
+  const { searchValue } = useAppSelector(({ home }) => home);
 
   useEffect(() => {
     setLoading(true);
@@ -29,7 +28,7 @@ export const Home: FC = () => {
           params: {
             ...(pizzaCategory > 0 ? { category: pizzaCategory } : {}),
             ...(selectedSort.value ? { sortBy: selectedSort.value } : {}),
-            ...(searchVal ? { search: searchVal } : {}),
+            ...(searchValue ? { search: searchValue } : {}),
             page: currentPage,
             limit: 4,
           },
@@ -46,7 +45,7 @@ export const Home: FC = () => {
       // navigate(`/${selectedSort && `?sortBy=${selectedSort}`}`)
     };
     void fetchPizzas();
-  }, [pizzaCategory, selectedSort, searchVal, currentPage]);
+  }, [pizzaCategory, selectedSort, searchValue, currentPage]);
 
   return (
     <>
