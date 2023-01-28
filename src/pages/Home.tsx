@@ -8,7 +8,7 @@ import { FC, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { IPizza, ISortOption } from 'types';
-import { baseRequest } from './../api/baseRequest';
+import { baseRequest } from 'api/baseRequest';
 
 export const Home: FC = () => {
   const [pizzas, setPizzas] = useState<IPizza[]>([]);
