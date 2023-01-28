@@ -16,7 +16,6 @@ export const Home: FC = () => {
   const { searchValue, pizzaCategory, sortOrder, page } = useAppSelector(
     ({ home }) => home,
   );
-  console.log(pizzas);
 
   useEffect(() => {
     setLoading(true);
