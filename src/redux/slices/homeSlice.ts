@@ -3,10 +3,12 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 
 export interface CounterState {
   searchValue: string;
+  pizzaCategory: number
 }
 
 const initialState: CounterState = {
   searchValue: '',
+  pizzaCategory: 0
 };
 
 export const counterSlice = createSlice({
@@ -16,9 +18,12 @@ export const counterSlice = createSlice({
     setSearchValue (state, { payload }: PayloadAction<string>) {
       state.searchValue = payload;
     },
+    setCategory (state, { payload }: PayloadAction<number>) {
+      state.pizzaCategory = payload;
+    },
   },
 });
 
-export const { setSearchValue } = counterSlice.actions;
+export const { setSearchValue, setCategory } = counterSlice.actions;
 
 export default counterSlice.reducer;

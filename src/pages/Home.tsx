@@ -13,11 +13,11 @@ import { baseRequest } from 'api/baseRequest';
 export const Home: FC = () => {
   const [pizzas, setPizzas] = useState<IPizza[]>([]);
   const [isLoading, setLoading] = useState(false);
-  const [pizzaCategory, setPizzaCategory] = useState(0);
+  // const [pizzaCategory, setPizzaCategory] = useState(0);
   const [selectedSort, setSelectedSort] = useState({} as ISortOption);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { searchValue } = useAppSelector(({ home }) => home);
+  const { searchValue, pizzaCategory } = useAppSelector(({ home }) => home);
 
   useEffect(() => {
     setLoading(true);
@@ -30,7 +30,7 @@ export const Home: FC = () => {
             ...(selectedSort.value ? { sortBy: selectedSort.value } : {}),
             ...(searchValue ? { search: searchValue } : {}),
             page: currentPage,
-            limit: 4,
+            limit: pizzaCategory > 0 ? 4 : '',
           },
         })
         .catch((e) => {
@@ -50,7 +50,7 @@ export const Home: FC = () => {
   return (
     <>
       <div className="content__top">
-        <Categories category={pizzaCategory} setCategory={setPizzaCategory} />
+        <Categories />
         <SortDropdown
           selectedSort={selectedSort}
           setSelectedSort={setSelectedSort}
