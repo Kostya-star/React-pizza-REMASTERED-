@@ -10,10 +10,10 @@ const initialState: CounterState = {
 };
 
 export const counterSlice = createSlice({
-  name: 'counter',
+  name: 'home',
   initialState,
   reducers: {
-    setSearchValue: (state, { payload }: PayloadAction<string>) => {
+    setSearchValue (state, { payload }: PayloadAction<string>) {
       state.searchValue = payload;
     },
   },
