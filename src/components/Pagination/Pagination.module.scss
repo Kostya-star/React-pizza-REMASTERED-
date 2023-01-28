@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   gap: 20px;
+
   button {
     appearance: none;
     border: none;
@@ -10,6 +11,7 @@
     font-size: 30px;
     color: #fe5f1e;
   }
+
   ul {
     display: flex;
     gap: 10px;
@@ -22,9 +24,15 @@
       border-radius: 5px;
       cursor: pointer;
       transition: .2s all;
+
       &:hover {
         color: white;
         background-color: #fe5f1e;
+      }
+
+      &.active {
+        background-color: #fe5f1e;
+        color: white;
       }
     }
   }

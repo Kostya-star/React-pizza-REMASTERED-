@@ -12,11 +12,11 @@ import { IPizza } from 'types';
 export const Home: FC = () => {
   const [pizzas, setPizzas] = useState<IPizza[]>([]);
   const [isLoading, setLoading] = useState(false);
-  // const [currentPage, setCurrentPage] = useState(1);
 
-  const { searchValue, pizzaCategory, sortOrder } = useAppSelector(
+  const { searchValue, pizzaCategory, sortOrder, page } = useAppSelector(
     ({ home }) => home,
   );
+  console.log(pizzas);
 
   useEffect(() => {
     setLoading(true);
@@ -28,8 +28,9 @@ export const Home: FC = () => {
             ...(pizzaCategory > 0 ? { category: pizzaCategory } : {}),
             ...(sortOrder ? { sortBy: sortOrder } : {}),
             ...(searchValue ? { search: searchValue } : {}),
-            page: currentPage,
-            limit: pizzaCategory > 0 ? 4 : '',
+            page,
+            // limit: pizzaCategory === 0 ? 4 : '',
+            // limit: 4,
           },
         })
         .catch((e) => {
@@ -44,7 +45,7 @@ export const Home: FC = () => {
       // navigate(`/${selectedSort && `?sortBy=${selectedSort}`}`)
     };
     void fetchPizzas();
-  }, [pizzaCategory, sortOrder, searchValue, currentPage]);
+  }, [pizzaCategory, sortOrder, searchValue, page]);
 
   return (
     <>
@@ -58,7 +59,7 @@ export const Home: FC = () => {
           ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
           : pizzas.map((pizza) => <Pizza key={pizza.id} {...pizza} />)}
       </div>
-      <Pagination />
+      {/* <Pagination /> */}
     </>
   );
 };
