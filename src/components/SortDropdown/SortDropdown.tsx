@@ -1,37 +1,34 @@
 import { ReactComponent as SortDownSVG } from 'assets/svg/sort-down.svg';
 import { ReactComponent as SortUpSVG } from 'assets/svg/sort-up.svg';
 import { FC, useState } from 'react';
-import { ISortOption } from 'types';
+import { useAppSelector } from 'redux/hooks';
+import { setSortOrder } from 'redux/slices/homeSlice';
+import { useAppDispatch } from './../../redux/hooks';
 import s from './SortDropdown.module.scss';
 
 const dropDownOptions = [
   {
     value: 'rating',
-    label: 'rating'
+    label: 'rating',
   },
   {
     value: 'price',
-    label: 'price'
+    label: 'price',
   },
   {
     value: 'title',
-    label: 'abc'
-  }
+    label: 'abc',
+  },
 ];
 
-interface ISortDropdownProps {
-  selectedSort: ISortOption;
-  setSelectedSort: (sort: ISortOption) => void;
-}
-
-export const SortDropdown: FC<ISortDropdownProps> = ({
-  selectedSort,
-  setSelectedSort
-}) => {
+export const SortDropdown: FC = () => {
   const [isVisible, setVisible] = useState(false);
 
-  const onSelectOption = (sortObj: ISortOption) => {
-    setSelectedSort(sortObj);
+  const sortOrder = useAppSelector(({ home }) => home.sortOrder);
+  const dispatch = useAppDispatch();
+
+  const onSelectOption = (sort: string) => {
+    dispatch(setSortOrder(sort));
     setVisible(false);
   };
 
@@ -41,7 +38,7 @@ export const SortDropdown: FC<ISortDropdownProps> = ({
         {isVisible ? <SortDownSVG /> : <SortUpSVG />}
         <b>Sort by:</b>
         <span onClick={() => setVisible(!isVisible)}>
-          {selectedSort.label ?? 'Click here'}
+          {sortOrder || 'Click here'}
         </span>
       </div>
       {isVisible && (
@@ -50,8 +47,8 @@ export const SortDropdown: FC<ISortDropdownProps> = ({
             {dropDownOptions.map((sortObj, index) => (
               <li
                 key={index}
-                onClick={() => onSelectOption(sortObj)}
-                className={selectedSort === sortObj ? `${s.active}` : ''}
+                onClick={() => onSelectOption(sortObj.value)}
+                className={sortOrder === sortObj.value ? `${s.active}` : ''}
               >
                 {sortObj.label}
               </li>

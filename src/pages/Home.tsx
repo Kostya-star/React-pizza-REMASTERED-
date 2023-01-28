@@ -1,23 +1,22 @@
+import { baseRequest } from 'api/baseRequest';
 import axios from 'axios';
 import { Categories } from 'components/Categories/Categories';
 import { Pagination } from 'components/Pagination/Pagination';
 import { Pizza } from 'components/Pizza/Pizza';
 import { Skeleton } from 'components/Skeleton/Skeleton';
 import { SortDropdown } from 'components/SortDropdown/SortDropdown';
-import { FC, useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from 'redux/hooks';
-import { IPizza, ISortOption } from 'types';
-import { baseRequest } from 'api/baseRequest';
+import { FC, useEffect, useState } from 'react';
+import { useAppSelector } from 'redux/hooks';
+import { IPizza } from 'types';
 
 export const Home: FC = () => {
   const [pizzas, setPizzas] = useState<IPizza[]>([]);
   const [isLoading, setLoading] = useState(false);
-  // const [pizzaCategory, setPizzaCategory] = useState(0);
-  const [selectedSort, setSelectedSort] = useState({} as ISortOption);
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(1);
 
-  const { searchValue, pizzaCategory } = useAppSelector(({ home }) => home);
+  const { searchValue, pizzaCategory, sortOrder } = useAppSelector(
+    ({ home }) => home,
+  );
 
   useEffect(() => {
     setLoading(true);
@@ -27,7 +26,7 @@ export const Home: FC = () => {
         .get(`${baseRequest}`, {
           params: {
             ...(pizzaCategory > 0 ? { category: pizzaCategory } : {}),
-            ...(selectedSort.value ? { sortBy: selectedSort.value } : {}),
+            ...(sortOrder ? { sortBy: sortOrder } : {}),
             ...(searchValue ? { search: searchValue } : {}),
             page: currentPage,
             limit: pizzaCategory > 0 ? 4 : '',
@@ -45,16 +44,13 @@ export const Home: FC = () => {
       // navigate(`/${selectedSort && `?sortBy=${selectedSort}`}`)
     };
     void fetchPizzas();
-  }, [pizzaCategory, selectedSort, searchValue, currentPage]);
+  }, [pizzaCategory, sortOrder, searchValue, currentPage]);
 
   return (
     <>
       <div className="content__top">
         <Categories />
-        <SortDropdown
-          selectedSort={selectedSort}
-          setSelectedSort={setSelectedSort}
-        />
+        <SortDropdown />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
@@ -62,7 +58,7 @@ export const Home: FC = () => {
           ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
           : pizzas.map((pizza) => <Pizza key={pizza.id} {...pizza} />)}
       </div>
-      <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
+      <Pagination />
     </>
   );
 };

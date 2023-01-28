@@ -1,15 +1,12 @@
 import { FC } from 'react';
 import s from './Pagination.module.scss';
 
-interface IPaginationProps {
-  currentPage: number;
-  setCurrentPage: (page: number | ((prev: number) => number)) => void;
-}
+// interface IPaginationProps {
+//   currentPage: number;
+//   setCurrentPage: (page: number | ((prev: number) => number)) => void;
+// }
 
-export const Pagination: FC<IPaginationProps> = ({
-  currentPage,
-  setCurrentPage,
-}) => {
+export const Pagination: FC = () => {
   // const pagesArr = Array.from(Array(Math.ceil(pages)).keys());
   const pagesArr = Array.from(Array(3).keys());
 
