@@ -36,6 +36,9 @@
         "@typescript-eslint/member-delimiter-style": "off",
         "@typescript-eslint/comma-dangle": "off",
         "@typescript-eslint/quotes": "off",
-        "eol-last": "off"
+        "eol-last": "off",
+        "no-trailing-spaces": "off",
+        "no-multiple-empty-lines": "off",
+        "@typescript-eslint/keyword-spacing": "off"
     }
 }

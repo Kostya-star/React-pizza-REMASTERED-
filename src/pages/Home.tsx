@@ -1,25 +1,45 @@
 import { baseRequest } from 'api/baseRequest';
 import axios from 'axios';
 import { Categories } from 'components/Categories/Categories';
-import { Pagination } from 'components/Pagination/Pagination';
 import { Pizza } from 'components/Pizza/Pizza';
 import { Skeleton } from 'components/Skeleton/Skeleton';
 import { SortDropdown } from 'components/SortDropdown/SortDropdown';
-import { FC, useEffect, useState } from 'react';
+import qs from 'qs';
+import { FC, useEffect, useState, useRef } from 'react';
 import { useAppSelector } from 'redux/hooks';
 import { IPizza } from 'types';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useAppDispatch } from './../redux/hooks';
+import {
+  setSearchValue,
+  setCategory,
+  setSortOrder,
+} from 'redux/slices/homeSlice';
 
 export const Home: FC = () => {
   const [pizzas, setPizzas] = useState<IPizza[]>([]);
   const [isLoading, setLoading] = useState(false);
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const { searchValue, pizzaCategory, sortOrder, page } = useAppSelector(
     ({ home }) => home,
   );
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const { category, order, search } = qs.parse(
+      location.search.substring(1),
+    );
+
+    dispatch(setSearchValue(search as string));
+    dispatch(setCategory(Number(category)));
+    dispatch(setSortOrder(order as string));
+  }, [location.search]);
 
   useEffect(() => {
     setLoading(true);
-
     const fetchPizzas = async () => {
       const resp = await axios
         .get(`${baseRequest}`, {
@@ -27,7 +47,7 @@ export const Home: FC = () => {
             ...(pizzaCategory > 0 ? { category: pizzaCategory } : {}),
             ...(sortOrder ? { sortBy: sortOrder } : {}),
             ...(searchValue ? { search: searchValue } : {}),
-            page,
+            // page,
             // limit: pizzaCategory === 0 ? 4 : '',
             // limit: 4,
           },
@@ -41,10 +61,18 @@ export const Home: FC = () => {
         setPizzas(resp.data);
         setLoading(false);
       }
-      // navigate(`/${selectedSort && `?sortBy=${selectedSort}`}`)
     };
     void fetchPizzas();
-  }, [pizzaCategory, sortOrder, searchValue, page]);
+  }, [pizzaCategory, sortOrder, searchValue]);
+
+  useEffect(() => {
+    const queryString = qs.stringify({
+      ...(pizzaCategory && { category: pizzaCategory }),
+      ...(sortOrder && { order: sortOrder }),
+      ...(searchValue && { search: searchValue }),
+    });
+    navigate(`?${queryString}`);
+  }, [pizzaCategory, sortOrder, searchValue]);
 
   return (
     <>
