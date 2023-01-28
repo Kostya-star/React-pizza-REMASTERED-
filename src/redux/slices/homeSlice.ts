@@ -5,12 +5,14 @@ export interface CounterState {
   searchValue: string
   pizzaCategory: number
   sortOrder: string
+  page: number
 }
 
 const initialState: CounterState = {
   searchValue: '',
   pizzaCategory: 0,
-  sortOrder: ''
+  sortOrder: '',
+  page: 1
 };
 
 export const counterSlice = createSlice({
@@ -25,10 +27,13 @@ export const counterSlice = createSlice({
     },
     setSortOrder (state, { payload }: PayloadAction<string>) {
       state.sortOrder = payload
+    },
+    setPage (state, { payload }: PayloadAction<number>) {
+      state.page = payload
     }
   },
 });
 
-export const { setSearchValue, setCategory, setSortOrder } = counterSlice.actions;
+export const { setSearchValue, setCategory, setSortOrder, setPage } = counterSlice.actions;
 
 export default counterSlice.reducer;

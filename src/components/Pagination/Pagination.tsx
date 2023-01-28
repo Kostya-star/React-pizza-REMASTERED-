@@ -1,5 +1,7 @@
 import { FC } from 'react';
 import s from './Pagination.module.scss';
+import { useAppSelector } from 'redux/hooks';
+import { useAppDispatch } from './../../redux/hooks';
 
 // interface IPaginationProps {
 //   currentPage: number;
@@ -7,6 +9,9 @@ import s from './Pagination.module.scss';
 // }
 
 export const Pagination: FC = () => {
+  const currentPage = useAppSelector(({ home }) => home.page)
+  const dispatch = useAppDispatch()
+
   // const pagesArr = Array.from(Array(Math.ceil(pages)).keys());
   const pagesArr = Array.from(Array(3).keys());
 
