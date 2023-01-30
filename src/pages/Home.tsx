@@ -29,13 +29,11 @@ export const Home: FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const { category, order, search } = qs.parse(
-      location.search.substring(1),
-    );
+    const { category, order, search } = qs.parse(location.search.substring(1));
 
-    dispatch(setSearchValue(search as string));
-    dispatch(setCategory(Number(category)));
-    dispatch(setSortOrder(order as string));
+    search && dispatch(setSearchValue(search as string));
+    category && dispatch(setCategory(Number(category)));
+    order && dispatch(setSortOrder(order as string));
   }, [location.search]);
 
   useEffect(() => {

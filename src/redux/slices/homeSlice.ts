@@ -15,7 +15,7 @@ const initialState: CounterState = {
   page: 1
 };
 
-export const counterSlice = createSlice({
+export const homeSlice = createSlice({
   name: 'home',
   initialState,
   reducers: {
@@ -34,6 +34,6 @@ export const counterSlice = createSlice({
   },
 });
 
-export const { setSearchValue, setCategory, setSortOrder, setPage } = counterSlice.actions;
+export const { setSearchValue, setCategory, setSortOrder, setPage } = homeSlice.actions;
 
-export default counterSlice.reducer;
+export default homeSlice.reducer;
