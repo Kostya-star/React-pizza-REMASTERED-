@@ -1,17 +1,21 @@
 import { FC } from 'react';
-import { setCategory } from 'redux/slices/homeSlice';
 import s from './Categories.module.scss';
 
 const pizzaTypes = ['All', 'Meat', 'Vegetarian', 'Spicy', 'Mixed'];
 
-export const Categories: FC = () => {
+interface ICategoriesProps {
+  category: number;
+  setCategory: (category: number) => void;
+}
+
+export const Categories: FC<ICategoriesProps> = ({ category, setCategory }) => {
   return (
     <div className={s.categories}>
       <ul>
         {pizzaTypes.map((pizza, index) => (
           <li
             key={index}
-            onClick={() => dispatch(setCategory(index))}
+            onClick={() => setCategory(index)}
             className={index === category ? `${s.active}` : ''}
           >
             {pizza}

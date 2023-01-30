@@ -83,10 +83,17 @@ export const Home: FC = () => {
     dispatch(setSortOrder(sort));
   };
 
+  const onSetPizzaCategoryHandler = (category: number) => {
+    dispatch(setCategory(category));
+  };
+
   return (
     <>
       <div className="content__top">
-        <Categories />
+        <Categories
+          category={pizzaCategory}
+          setCategory={onSetPizzaCategoryHandler}
+        />
         <SortDropdown
           sortOrder={sortOrder}
           setSortOrder={onSetSortOrderHandler}
