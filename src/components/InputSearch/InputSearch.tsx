@@ -1,16 +1,22 @@
 import { ReactComponent as CloseSVG } from 'assets/svg/close.svg';
 import { ReactComponent as SearchGlassSVG } from 'assets/svg/search-glass.svg';
 import debounce from 'lodash.debounce';
-import { FC, useCallback, useRef } from 'react';
+import { FC, useCallback, useRef, useState, memo, useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { setSearchValue } from 'redux/slices/homeSlice';
-import { useAppDispatch, useAppSelector } from './../../redux/hooks';
 import s from './InputSearch.module.scss';
 
 export const InputSearch: FC = () => {
   const searchValue = useAppSelector(({ home }) => home.searchValue);
   const dispatch = useAppDispatch();
 
+  const [inputVal, setInputVal] = useState(searchValue);
+
   const searchRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setInputVal(searchValue);
+  }, [searchValue]);
 
   const debouncedSearch = useCallback(
     debounce((value: string) => {
@@ -20,10 +26,12 @@ export const InputSearch: FC = () => {
   );
 
   const onSearchChange = (value: string) => {
+    setInputVal(value);
     debouncedSearch(value);
   };
 
   const onClearSearch = () => {
+    setInputVal('');
     dispatch(setSearchValue(''));
     searchRef.current?.focus();
   };
@@ -32,7 +40,8 @@ export const InputSearch: FC = () => {
     <div className={s.search}>
       <SearchGlassSVG />
       <input
-        defaultValue={searchValue}
+        // defaultValue={inputVal}
+        value={inputVal}
         onChange={(e) => onSearchChange(e.target.value)}
         type="text"
         ref={searchRef}
