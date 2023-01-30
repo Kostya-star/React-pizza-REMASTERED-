@@ -9,7 +9,6 @@ const pizzaTypes = ['All', 'Meat', 'Vegetarian', 'Spicy', 'Mixed'];
 export const Categories: FC = () => {
   const category = useAppSelector(({ home }) => home.pizzaCategory);
   const dispatch = useAppDispatch()
-  console.log(category);
 
   return (
     <div className={s.categories}>

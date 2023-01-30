@@ -1,6 +1,6 @@
 import { ReactComponent as SortDownSVG } from 'assets/svg/sort-down.svg';
 import { ReactComponent as SortUpSVG } from 'assets/svg/sort-up.svg';
-import { FC, useState } from 'react';
+import { FC, useState, useRef, useEffect, RefObject } from 'react';
 import { useAppSelector } from 'redux/hooks';
 import { setSortOrder } from 'redux/slices/homeSlice';
 import { useAppDispatch } from './../../redux/hooks';
@@ -23,6 +23,19 @@ const dropDownOptions = [
 
 export const SortDropdown: FC = () => {
   const [isVisible, setVisible] = useState(false);
+  const sortRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onClickSortOutside = ({ target }: MouseEvent) => {
+      if (!sortRef.current?.contains(target as Node)) {
+        setVisible(false);
+      }
+    };
+
+    document.body.addEventListener('click', onClickSortOutside);
+
+    return () => document.body.removeEventListener('click', onClickSortOutside);
+  }, []);
 
   const sortOrder = useAppSelector(({ home }) => home.sortOrder);
   const dispatch = useAppDispatch();
@@ -33,7 +46,7 @@ export const SortDropdown: FC = () => {
   };
 
   return (
-    <div className={s.sort}>
+    <div className={s.sort} ref={sortRef}>
       <div className={s.sort__label}>
         {isVisible ? <SortDownSVG /> : <SortUpSVG />}
         <b>Sort by:</b>
