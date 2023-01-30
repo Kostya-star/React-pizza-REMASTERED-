@@ -28,12 +28,19 @@ export const Home: FC = () => {
   );
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    const { category, order, search } = qs.parse(location.search.substring(1));
+  const isMounted = useRef(false);
 
-    search && dispatch(setSearchValue(search as string));
-    category && dispatch(setCategory(Number(category)));
-    order && dispatch(setSortOrder(order as string));
+  useEffect(() => {
+    if (!isMounted.current) {
+      const { category, order, search } = qs.parse(
+        location.search.substring(1),
+      );
+
+      search && dispatch(setSearchValue(search as string));
+      category && dispatch(setCategory(Number(category)));
+      order && dispatch(setSortOrder(order as string));
+    }
+    isMounted.current = true;
   }, [location.search]);
 
   useEffect(() => {
@@ -72,11 +79,18 @@ export const Home: FC = () => {
     navigate(`?${queryString}`);
   }, [pizzaCategory, sortOrder, searchValue]);
 
+  const onSetSortOrderHandler = (sort: string) => {
+    dispatch(setSortOrder(sort));
+  };
+
   return (
     <>
       <div className="content__top">
         <Categories />
-        <SortDropdown />
+        <SortDropdown
+          sortOrder={sortOrder}
+          setSortOrder={onSetSortOrderHandler}
+        />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">

@@ -1,9 +1,6 @@
 import { ReactComponent as SortDownSVG } from 'assets/svg/sort-down.svg';
 import { ReactComponent as SortUpSVG } from 'assets/svg/sort-up.svg';
-import { FC, useState, useRef, useEffect, RefObject } from 'react';
-import { useAppSelector } from 'redux/hooks';
-import { setSortOrder } from 'redux/slices/homeSlice';
-import { useAppDispatch } from './../../redux/hooks';
+import { FC, useEffect, useRef, useState } from 'react';
 import s from './SortDropdown.module.scss';
 
 const dropDownOptions = [
@@ -21,7 +18,15 @@ const dropDownOptions = [
   },
 ];
 
-export const SortDropdown: FC = () => {
+interface ISortDropdownProps {
+  sortOrder: string;
+  setSortOrder: (sort: string) => void;
+}
+
+export const SortDropdown: FC<ISortDropdownProps> = ({
+  sortOrder,
+  setSortOrder,
+}) => {
   const [isVisible, setVisible] = useState(false);
   const sortRef = useRef<HTMLDivElement>(null);
 
@@ -37,13 +42,12 @@ export const SortDropdown: FC = () => {
     return () => document.body.removeEventListener('click', onClickSortOutside);
   }, []);
 
-  const sortOrder = useAppSelector(({ home }) => home.sortOrder);
-  const dispatch = useAppDispatch();
-
   const onSelectOption = (sort: string) => {
-    dispatch(setSortOrder(sort));
+    setSortOrder(sort);
     setVisible(false);
   };
+
+  const currentSort = dropDownOptions.find((s) => s.value === sortOrder)?.label;
 
   return (
     <div className={s.sort} ref={sortRef}>
@@ -51,7 +55,7 @@ export const SortDropdown: FC = () => {
         {isVisible ? <SortDownSVG /> : <SortUpSVG />}
         <b>Sort by:</b>
         <span onClick={() => setVisible(!isVisible)}>
-          {sortOrder || 'Click here'}
+          {currentSort ?? 'Click here'}
         </span>
       </div>
       {isVisible && (
