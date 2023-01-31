@@ -39,6 +39,7 @@
         "eol-last": "off",
         "no-trailing-spaces": "off",
         "no-multiple-empty-lines": "off",
-        "@typescript-eslint/keyword-spacing": "off"
+        "@typescript-eslint/keyword-spacing": "off",
+        "@typescript-eslint/space-before-function-paren": "off"
     }
 }
