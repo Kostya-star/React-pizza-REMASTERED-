@@ -41,15 +41,6 @@
     // border-width: 2px;
   }
 
-  &--black {
-    background-color: $black;
-
-    &:hover,
-    &:active {
-      background-color: lighten($color: $black, $amount: 10);
-    }
-  }
-
   &__delimiter {
     width: 1px;
     height: 25px;

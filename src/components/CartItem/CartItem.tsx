@@ -3,7 +3,7 @@ import { ReactComponent as MinusSVG } from 'assets/svg/minus.svg';
 import { ReactComponent as PlusSVG } from 'assets/svg/plus.svg';
 import { FC } from 'react';
 import { useAppDispatch } from 'redux/hooks';
-import { deleteItem, minusItem, plusItem } from 'redux/slices/cartSlice';
+import { deleteItem, minusPlusItem } from 'redux/slices/cartSlice';
 import { ICartItem } from 'types';
 import s from './CartItem.module.scss';
 
@@ -18,7 +18,11 @@ export const CartItem: FC<ICartItemProps> = ({
   size,
   count,
 }) => {
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
+
+  const onMinusPlusHandle = (id: number, val: string) => {
+    dispatch(minusPlusItem({ id, val }))
+  };
 
   return (
     <div className={s.cart__item}>
@@ -32,11 +36,17 @@ export const CartItem: FC<ICartItemProps> = ({
         </p>
       </div>
       <div className={s.cart__item_count}>
-        <button onClick={() => dispatch(minusItem(id))} className={s.cart__item_btn}>
+        <button
+          onClick={() => onMinusPlusHandle(id, 'minus')}
+          className={s.cart__item_btn}
+        >
           <MinusSVG />
         </button>
         <b>{count}</b>
-        <button onClick={() => dispatch(plusItem(id))} className={s.cart__item_btn}>
+        <button
+          onClick={() => onMinusPlusHandle(id, 'plus')}
+          className={s.cart__item_btn}
+        >
           <PlusSVG />
         </button>
       </div>
@@ -44,7 +54,10 @@ export const CartItem: FC<ICartItemProps> = ({
         <b>{price * count} ₽</b>
       </div>
       <div className={s.cart__item_remove}>
-        <button onClick={() => dispatch(deleteItem(id))} className={`${s.cart__item_btn} ${s.cart__item_btn_clear}`}>
+        <button
+          onClick={() => dispatch(deleteItem(id))}
+          className={`${s.cart__item_btn} ${s.cart__item_btn_clear}`}
+        >
           <DeleteSVG />
         </button>
       </div>

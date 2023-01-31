@@ -30,18 +30,20 @@ export const cartSlice = createSlice({
       //   0,
       // );
     },
-    minusItem(state, { payload }: PayloadAction<number>) {
-      const decreasedItem = state.items.find((item) => item.id === payload);
+    minusPlusItem(
+      state,
+      { payload }: PayloadAction<{ id: number; val: string }>,
+    ) {
+      const minusPlusItem = state.items.find((item) => item.id === payload.id);
 
-      if (decreasedItem && decreasedItem.count !== 0) {
-        decreasedItem.count = decreasedItem.count - 1;
-      }
-    },
-    plusItem(state, { payload }: PayloadAction<number>) {
-      const increasedItem = state.items.find((item) => item.id === payload);
-
-      if (increasedItem) {
-        increasedItem.count = increasedItem.count + 1;
+      if (
+        minusPlusItem &&
+        minusPlusItem.count !== 0 &&
+        payload.val === 'minus'
+      ) {
+        minusPlusItem.count = minusPlusItem.count - 1;
+      } else if (minusPlusItem && payload.val === 'plus') {
+        minusPlusItem.count = minusPlusItem.count + 1;
       }
     },
     deleteItem(state, { payload }: PayloadAction<number>) {
@@ -53,7 +55,7 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { addItem, minusItem, plusItem, deleteItem, clearCart } =
+export const { addItem, minusPlusItem, deleteItem, clearCart } =
   cartSlice.actions;
 
 export default cartSlice.reducer;

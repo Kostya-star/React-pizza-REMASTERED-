@@ -4,15 +4,23 @@ import { ReactComponent as ArrowBackSVG } from 'assets/svg/arrow-back.svg';
 import { Link } from 'react-router-dom';
 import { CartItem } from 'components/CartItem/CartItem';
 import { useAppSelector, useAppDispatch } from 'redux/hooks';
-import { clearCart } from 'redux/slices/cartSlice'
+import { clearCart } from 'redux/slices/cartSlice';
+import { CartEmpty } from 'components/CartEmpty/CartEmpty';
 
 export const Cart = () => {
-  const { items } = useAppSelector(({ cart }) => cart)
-  const dispatch = useAppDispatch()
+  const items = useAppSelector(({ cart }) => cart.items);
+  const dispatch = useAppDispatch();
 
-  const itemsCount = items.reduce((sum, item) => item.count + sum, 0)
+  const itemsCount = items.reduce((sum, item) => item.count + sum, 0);
 
-  const totalPrice = items.reduce((sum, item) => (item.count * item.price) + sum, 0)
+  const totalPrice = items.reduce(
+    (sum, item) => item.count * item.price + sum,
+    0,
+  );
+
+  if (!items?.length) {
+    return <CartEmpty />;
+  }
 
   return (
     <div className="container container--cart">
@@ -20,37 +28,32 @@ export const Cart = () => {
         <div className="cart__top">
           <h2 className="content__title">
             <CarriageSVG />
-            Корзина
+            Cart
           </h2>
-          <button onClick={() => dispatch(clearCart())} className="cart__clear"> 
+          <button onClick={() => dispatch(clearCart())} className="cart__clear">
             <ClearSVG />
-            <span>Очистить корзину</span>
+            <span>Clear cart</span>
           </button>
         </div>
-        {
-          items.map(item => (
-            <CartItem key={item.id} {...item}/>
-          ))
-        }
+        {items.map((item) => (
+          <CartItem key={item.id} {...item} />
+        ))}
         <div className="cart__bottom">
           <div className="cart__bottom-details">
             <span>
-              Всего пицц: <b>{itemsCount} шт.</b>{' '}
+              Total count: <b>{itemsCount} pcs.</b>{' '}
             </span>
             <span>
-              Сумма заказа: <b>{totalPrice} ₽</b>{' '}
+              Amount to be paid: <b>{totalPrice} ₽</b>{' '}
             </span>
           </div>
           <div className="cart__bottom-buttons">
-            <Link
-              to="/"
-              className="button go-back-btn"
-            >
+            <Link to="/" className="button go-back-btn">
               <ArrowBackSVG />
-              <span>Вернуться назад</span>
+              <span>Go home</span>
             </Link>
             <button className="button pay-btn">
-              <span>Оплатить сейчас</span>
+              <span>Pay now</span>
             </button>
           </div>
         </div>
