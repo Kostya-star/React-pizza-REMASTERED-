@@ -1,38 +1,41 @@
 import { ReactComponent as CloseSVG } from 'assets/svg/close.svg';
 import { ReactComponent as SearchGlassSVG } from 'assets/svg/search-glass.svg';
 import debounce from 'lodash.debounce';
-import { FC, useCallback, useRef, useState, memo, useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from 'redux/hooks';
-import { setSearchValue } from 'redux/slices/homeSlice';
+import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import s from './InputSearch.module.scss';
 
-export const InputSearch: FC = () => {
-  // const searchValue = useAppSelector(({ home }) => home.searchValue);
-  // const dispatch = useAppDispatch();
+interface InputSearchProps {
+  searchVal: string;
+  onSetSearchVal: (val: string) => void;
+}
 
-  const [inputVal, setInputVal] = useState(searchValue);
+export const InputSearch: FC<InputSearchProps> = ({
+  searchVal,
+  onSetSearchVal,
+}) => {
+  const [localVal, setLocalVal] = useState('');
 
   const searchRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    setInputVal(searchValue);
-  }, [searchValue]);
+    setLocalVal(searchVal);
+  }, [searchVal]);
 
   const debouncedSearch = useCallback(
     debounce((value: string) => {
-      dispatch(setSearchValue(value));
+      onSetSearchVal(value);
     }, 700),
     [],
   );
 
   const onSearchChange = (value: string) => {
-    setInputVal(value);
+    setLocalVal(value);
     debouncedSearch(value);
   };
 
   const onClearSearch = () => {
-    setInputVal('');
-    dispatch(setSearchValue(''));
+    setLocalVal('');
+    onSetSearchVal('');
     searchRef.current?.focus();
   };
 
@@ -40,14 +43,14 @@ export const InputSearch: FC = () => {
     <div className={s.search}>
       <SearchGlassSVG />
       <input
-        // defaultValue={inputVal}
-        value={inputVal}
+        // defaultValue={searchVal}
+        value={localVal}
         onChange={(e) => onSearchChange(e.target.value)}
         type="text"
         ref={searchRef}
         placeholder="Search"
       />
-      {searchValue && <CloseSVG onClick={onClearSearch} />}
+      {localVal && <CloseSVG onClick={onClearSearch} />}
     </div>
   );
 };

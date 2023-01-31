@@ -1,19 +1,19 @@
 import { ReactComponent as CartSVG } from 'assets/svg/cart.svg';
 import { ReactComponent as PizzaLogo } from 'assets/svg/pizza-logo.svg';
 import { InputSearch } from 'components/InputSearch/InputSearch';
-import { FC, useCallback } from 'react';
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
-import s from './Header.module.scss';
 import { setSearchValue } from 'redux/slices/homeSlice';
+import s from './Header.module.scss';
 
 export const Header: FC = () => {
-  const searchValue = useAppSelector(({ home }) => home.searchValue);
+  const searchVal = useAppSelector(({ home }) => home.searchValue);
   const dispatch = useAppDispatch();
 
-  // const onInputSearchChange = (value: string) => {
-  //   dispatch(setSearchValue(value))
-  // }
+  const onInputSearchChange = (value: string) => {
+    dispatch(setSearchValue(value));
+  };
 
   return (
     <div className={s.header}>
@@ -26,7 +26,7 @@ export const Header: FC = () => {
           </div>
         </div>
       </Link>
-      <InputSearch />
+      <InputSearch searchVal={searchVal} onSetSearchVal={onInputSearchChange} />
       <div className="header__cart">
         <Link to="/cart" className="button button--cart">
           <span>520 ₽</span>
