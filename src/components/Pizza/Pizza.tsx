@@ -33,6 +33,7 @@ export const Pizza: FC<IPizzaProps> = ({
       imageUrl,
       type: pizzaTypes[selectedPizzaType],
       size: sizes[selectedPizzaSize],
+      count: 1
     };
     dispatch(addItem(item));
   };

@@ -6,7 +6,7 @@ interface ICartItem
   extends Omit<IPizza, 'types' | 'sizes' | 'rating' | 'category'> {
   type: string;
   size: number;
-  count?: number
+  count: number;
 }
 
 interface ICartState {
@@ -25,19 +25,17 @@ export const cartSlice = createSlice({
   reducers: {
     addItem(state, { payload }: PayloadAction<ICartItem>) {
       const existedItem = state.items.find((item) => item.id === payload.id);
-      
-      if (!existedItem) {
-        // let existedItem = 0
-        state.items.push({
-          ...payload,
-          count: 1
-        });
-      } else {
-        existedItem.count && existedItem.count++;
-      }
-      console.log(existedItem);
 
-      state.totalPrice = state.items.reduce((sum, item) => item.price + sum, 0);
+      if (!existedItem) {
+        state.items.push(payload);
+      } else {
+        existedItem.count++;
+      }
+
+      state.totalPrice = state.items.reduce(
+        (sum, item) => item.price * item.count + sum,
+        0,
+      );
     },
   },
 });
