@@ -2,7 +2,7 @@ import { ReactComponent as AddPizzaSVG } from 'assets/svg/add-pizza.svg';
 import { FC, useState } from 'react';
 import { IPizza } from 'types';
 import s from './Pizza.module.scss';
-import { useAppDispatch } from 'redux/hooks';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { addItem } from 'redux/slices/cartSlice';
 
 interface IPizzaProps extends IPizza {}
@@ -17,15 +17,13 @@ export const Pizza: FC<IPizzaProps> = ({
   sizes,
   price,
 }) => {
-  const [addedPizzaCount, setAddedPizzaCount] = useState(0);
   const [selectedPizzaType, setSelectedPizzaType] = useState(0);
   const [selectedPizzaSize, setSelectedPizzaSize] = useState(0);
 
+  const { items } = useAppSelector(({ cart }) => cart);
   const dispatch = useAppDispatch();
 
   const onAddPizza = () => {
-    setAddedPizzaCount((prev) => prev + 1);
-
     const item = {
       id,
       title,
@@ -33,10 +31,14 @@ export const Pizza: FC<IPizzaProps> = ({
       imageUrl,
       type: pizzaTypes[selectedPizzaType],
       size: sizes[selectedPizzaSize],
-      count: 1
+      count: 1,
     };
     dispatch(addItem(item));
   };
+
+  const pizzaCount = items.find((pizza) => pizza.id === id)?.count;
+  const pizzaType = items.find((pizza) => pizza.id === id)?.price;
+  // const pizzaType = items.find((pizza) => pizza.type === )?.count;
 
   return (
     <div className={s.pizza}>
@@ -73,7 +75,7 @@ export const Pizza: FC<IPizzaProps> = ({
           <div className={s.pizza__price}>от {price} ₽</div>
           <button onClick={onAddPizza}>
             <AddPizzaSVG />
-            <span>Добавить {addedPizzaCount || null}</span>
+            <span>Добавить {pizzaCount ?? null}</span>
           </button>
         </div>
       </div>
