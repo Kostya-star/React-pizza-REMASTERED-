@@ -8,3 +8,10 @@ export interface IPizza {
   category: number;
   rating: number;
 }
+
+export interface ICartItem
+  extends Omit<IPizza, 'types' | 'sizes' | 'rating' | 'category'> {
+  type: string;
+  size: number;
+  count: number;
+}

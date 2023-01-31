@@ -1,35 +1,50 @@
-import { ReactComponent as DecrementSVG } from 'assets/svg/minus.svg';
-import { ReactComponent as IncrementSVG } from 'assets/svg/plus.svg';
 import { ReactComponent as DeleteSVG } from 'assets/svg/delete.svg';
-import s from './CartItem.module.scss'
+import { ReactComponent as MinusSVG } from 'assets/svg/minus.svg';
+import { ReactComponent as PlusSVG } from 'assets/svg/plus.svg';
+import { FC } from 'react';
+import { useAppDispatch } from 'redux/hooks';
+import { deleteItem, minusItem, plusItem } from 'redux/slices/cartSlice';
+import { ICartItem } from 'types';
+import s from './CartItem.module.scss';
 
-export const CartItem = () => {
+interface ICartItemProps extends ICartItem {}
+
+export const CartItem: FC<ICartItemProps> = ({
+  id,
+  imageUrl,
+  title,
+  price,
+  type,
+  size,
+  count,
+}) => {
+  const dispatch = useAppDispatch()
+
   return (
     <div className={s.cart__item}>
       <div className={s.cart__item_img}>
-        <img
-          src="https://dodopizza.azureedge.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
-          alt="Pizza"
-        />
+        <img src={imageUrl} alt="Pizza" />
       </div>
       <div className={s.cart__item_info}>
-        <h3>Чизбургер-пицца</h3>
-        <p>тонкое, 26 см.</p>
+        <h3>{title}</h3>
+        <p>
+          {type}, {size} см.
+        </p>
       </div>
       <div className={s.cart__item_count}>
-        <button className={s.cart__item_btn}>
-          <DecrementSVG />
+        <button onClick={() => dispatch(minusItem(id))} className={s.cart__item_btn}>
+          <MinusSVG />
         </button>
-        <b>1</b>
-        <button className={s.cart__item_btn}>
-          <IncrementSVG />
+        <b>{count}</b>
+        <button onClick={() => dispatch(plusItem(id))} className={s.cart__item_btn}>
+          <PlusSVG />
         </button>
       </div>
       <div className={s.cart__item_price}>
-        <b>415 ₽</b>
+        <b>{price * count} ₽</b>
       </div>
       <div className={s.cart__item_remove}>
-        <button className={`${s.cart__item_btn} ${s.cart__item_btn_clear}`}>
+        <button onClick={() => dispatch(deleteItem(id))} className={`${s.cart__item_btn} ${s.cart__item_btn_clear}`}>
           <DeleteSVG />
         </button>
       </div>

@@ -3,8 +3,17 @@ import { ReactComponent as ClearSVG } from 'assets/svg/clear.svg';
 import { ReactComponent as ArrowBackSVG } from 'assets/svg/arrow-back.svg';
 import { Link } from 'react-router-dom';
 import { CartItem } from 'components/CartItem/CartItem';
+import { useAppSelector, useAppDispatch } from 'redux/hooks';
+import { clearCart } from 'redux/slices/cartSlice'
 
 export const Cart = () => {
+  const { items } = useAppSelector(({ cart }) => cart)
+  const dispatch = useAppDispatch()
+
+  const itemsCount = items.reduce((sum, item) => item.count + sum, 0)
+
+  const totalPrice = items.reduce((sum, item) => (item.count * item.price) + sum, 0)
+
   return (
     <div className="container container--cart">
       <div className="cart">
@@ -13,19 +22,23 @@ export const Cart = () => {
             <CarriageSVG />
             Корзина
           </h2>
-          <div className="cart__clear">
+          <button onClick={() => dispatch(clearCart())} className="cart__clear"> 
             <ClearSVG />
             <span>Очистить корзину</span>
-          </div>
+          </button>
         </div>
-        <CartItem/>
+        {
+          items.map(item => (
+            <CartItem key={item.id} {...item}/>
+          ))
+        }
         <div className="cart__bottom">
           <div className="cart__bottom-details">
             <span>
-              Всего пицц: <b>4 шт.</b>{' '}
+              Всего пицц: <b>{itemsCount} шт.</b>{' '}
             </span>
             <span>
-              Сумма заказа: <b>1898 ₽</b>{' '}
+              Сумма заказа: <b>{totalPrice} ₽</b>{' '}
             </span>
           </div>
           <div className="cart__bottom-buttons">
