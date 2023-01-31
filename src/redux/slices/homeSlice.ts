@@ -1,14 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-export interface CounterState {
+export interface IHomeState {
   searchValue: string
   pizzaCategory: number
   sortOrder: string
   page: number
 }
 
-const initialState: CounterState = {
+const initialState: IHomeState = {
   searchValue: '',
   pizzaCategory: 0,
   sortOrder: '',
