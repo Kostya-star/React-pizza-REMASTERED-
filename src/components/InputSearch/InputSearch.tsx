@@ -7,8 +7,8 @@ import { setSearchValue } from 'redux/slices/homeSlice';
 import s from './InputSearch.module.scss';
 
 export const InputSearch: FC = () => {
-  const searchValue = useAppSelector(({ home }) => home.searchValue);
-  const dispatch = useAppDispatch();
+  // const searchValue = useAppSelector(({ home }) => home.searchValue);
+  // const dispatch = useAppDispatch();
 
   const [inputVal, setInputVal] = useState(searchValue);
 

@@ -8,13 +8,12 @@ import s from './Header.module.scss';
 import { setSearchValue } from 'redux/slices/homeSlice';
 
 export const Header: FC = () => {
-  // const searchValue = useAppSelector(({ home }) => home.searchValue);
-  // const dispatch = useAppDispatch();
+  const searchValue = useAppSelector(({ home }) => home.searchValue);
+  const dispatch = useAppDispatch();
 
   // const onInputSearchChange = (value: string) => {
   //   dispatch(setSearchValue(value))
   // }
-  
 
   return (
     <div className={s.header}>
