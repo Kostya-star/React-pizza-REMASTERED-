@@ -1,22 +1,19 @@
-import { baseRequest } from 'api/baseRequest';
-import axios from 'axios';
 import { Categories } from 'components/Categories/Categories';
 import { Pizza } from 'components/Pizza/Pizza';
+import { ServerError } from 'components/ServerError/ServerError';
 import { Skeleton } from 'components/Skeleton/Skeleton';
 import { SortDropdown } from 'components/SortDropdown/SortDropdown';
 import qs from 'qs';
-import { FC, useEffect, useState, useRef } from 'react';
+import { FC, useEffect, useRef } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppSelector } from 'redux/hooks';
-import { IPizza } from 'types';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useAppDispatch } from './../redux/hooks';
 import {
-  setSearchValue,
-  setCategory,
-  setSortOrder,
   fetchPizzas,
+  setCategory,
+  setSearchValue,
+  setSortOrder,
 } from 'redux/slices/homeSlice';
-import { ServerError } from 'components/ServerError/ServerError';
+import { useAppDispatch } from './../redux/hooks';
 
 export const Home: FC = () => {
   const navigate = useNavigate();

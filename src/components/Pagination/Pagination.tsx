@@ -1,12 +1,9 @@
 import { FC } from 'react';
-import s from './Pagination.module.scss';
-import { useAppSelector } from 'redux/hooks';
 import { useAppDispatch } from './../../redux/hooks';
-import { setPage } from 'redux/slices/homeSlice';
-import { IPizza } from 'types';
+import s from './Pagination.module.scss';
 
 export const Pagination: FC = () => {
-  const currentPage = useAppSelector(({ home }) => home.page);
+  // const currentPage = useAppSelector(({ home }) => home.page);
   const dispatch = useAppDispatch();
 
   // if (pizzasCount === 0) return null
@@ -17,8 +14,8 @@ export const Pagination: FC = () => {
   return (
     <div className={s.pages}>
       <button
-        disabled={currentPage === 1}
-        onClick={() => dispatch(setPage(currentPage - 1))}
+      // disabled={currentPage === 1}
+      // onClick={() => dispatch(setPage(currentPage - 1))}
       >
         &#10094;
       </button>
@@ -26,16 +23,16 @@ export const Pagination: FC = () => {
         {pagesArr.map((page) => (
           <li
             key={page + 1}
-            onClick={() => dispatch(setPage(page + 1))}
-            className={page + 1 === currentPage ? `${s.active}` : ''}
+            // onClick={() => dispatch(setPage(page + 1))}
+            // className={page + 1 === currentPage ? `${s.active}` : ''}
           >
             {page + 1}
           </li>
         ))}
       </ul>
       <button
-        disabled={currentPage === 3}
-        onClick={() => dispatch(setPage(currentPage + 1))}
+      // disabled={currentPage === 3}
+      // onClick={() => dispatch(setPage(currentPage + 1))}
       >
         &#10095;
       </button>

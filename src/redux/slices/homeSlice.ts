@@ -33,7 +33,6 @@ export interface IHomeState {
   search: string;
   category: number;
   order: string;
-  page: number;
   status: string;
 }
 
@@ -41,8 +40,7 @@ const initialState: IHomeState = {
   items: [],
   search: '',
   category: 0,
-  order: '',
-  page: 1,
+  order: 'rating',
   status: '',
 };
 
@@ -50,9 +48,6 @@ export const homeSlice = createSlice({
   name: 'home',
   initialState,
   reducers: {
-    // setItems(state, { payload }: PayloadAction<IPizza[]>) {
-    //   state.items = payload;
-    // },
     setSearchValue(state, { payload }: PayloadAction<string>) {
       state.search = payload;
     },
@@ -61,9 +56,6 @@ export const homeSlice = createSlice({
     },
     setSortOrder(state, { payload }: PayloadAction<string>) {
       state.order = payload;
-    },
-    setPage(state, { payload }: PayloadAction<number>) {
-      state.page = payload;
     },
   },
   extraReducers: (builder) => {
@@ -86,7 +78,7 @@ export const homeSlice = createSlice({
   },
 });
 
-export const { setSearchValue, setCategory, setSortOrder, setPage } =
+export const { setSearchValue, setCategory, setSortOrder } =
   homeSlice.actions;
 
 export default homeSlice.reducer;

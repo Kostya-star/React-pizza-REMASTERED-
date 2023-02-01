@@ -55,7 +55,7 @@ export const SortDropdown: FC<ISortDropdownProps> = ({
         {isVisible ? <SortDownSVG /> : <SortUpSVG />}
         <b>Sort by:</b>
         <span onClick={() => setVisible(!isVisible)}>
-          {currentSort ?? 'Click here'}
+          {currentSort}
         </span>
       </div>
       {isVisible && (
