@@ -14,18 +14,16 @@ import {
   setSearchValue,
   setCategory,
   setSortOrder,
+  setItems,
 } from 'redux/slices/homeSlice';
 
 export const Home: FC = () => {
-  const [pizzas, setPizzas] = useState<IPizza[]>([]);
   const [isLoading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { searchValue, pizzaCategory, sortOrder, page } = useAppSelector(
-    ({ home }) => home,
-  );
+  const { items, search, category, order } = useAppSelector(({ home }) => home);
   const dispatch = useAppDispatch();
 
   const isMounted = useRef(false);
@@ -49,12 +47,9 @@ export const Home: FC = () => {
       const resp = await axios
         .get(`${baseRequest}`, {
           params: {
-            ...(pizzaCategory > 0 ? { category: pizzaCategory } : {}),
-            ...(sortOrder ? { sortBy: sortOrder } : {}),
-            ...(searchValue ? { search: searchValue } : {}),
-            // page,
-            // limit: pizzaCategory === 0 ? 4 : '',
-            // limit: 4,
+            ...(category > 0 ? { category } : {}),
+            ...(order ? { sortBy: order } : {}),
+            ...(search ? { search } : {}),
           },
         })
         .catch((e) => {
@@ -63,21 +58,21 @@ export const Home: FC = () => {
         });
 
       if (resp?.data.length) {
-        setPizzas(resp.data);
-        setLoading(false);
+        dispatch(setItems(resp.data));
       }
+      setLoading(false);
     };
     void fetchPizzas();
-  }, [pizzaCategory, sortOrder, searchValue]);
+  }, [category, order, search]);
 
   useEffect(() => {
     const queryString = qs.stringify({
-      ...(pizzaCategory && { category: pizzaCategory }),
-      ...(sortOrder && { order: sortOrder }),
-      ...(searchValue && { search: searchValue }),
+      ...(category && { category }),
+      ...(order && { order }),
+      ...(search && { search }),
     });
     navigate(`?${queryString}`);
-  }, [pizzaCategory, sortOrder, searchValue]);
+  }, [category, order, search]);
 
   const onSetSortOrderHandler = (sort: string) => {
     dispatch(setSortOrder(sort));
@@ -91,19 +86,16 @@ export const Home: FC = () => {
     <>
       <div className="content__top">
         <Categories
-          category={pizzaCategory}
+          category={category}
           setCategory={onSetPizzaCategoryHandler}
         />
-        <SortDropdown
-          sortOrder={sortOrder}
-          setSortOrder={onSetSortOrderHandler}
-        />
+        <SortDropdown sortOrder={order} setSortOrder={onSetSortOrderHandler} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
         {isLoading
           ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
-          : pizzas.map((pizza) => <Pizza key={pizza.id} {...pizza} />)}
+          : items.map((pizza) => <Pizza key={pizza.id} {...pizza} />)}
       </div>
       {/* <Pagination /> */}
     </>

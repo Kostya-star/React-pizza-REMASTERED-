@@ -1,17 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import { IPizza } from 'types';
 
 export interface IHomeState {
-  searchValue: string
-  pizzaCategory: number
-  sortOrder: string
+  items: IPizza[]
+  search: string
+  category: number
+  order: string
   page: number
 }
 
 const initialState: IHomeState = {
-  searchValue: '',
-  pizzaCategory: 0,
-  sortOrder: '',
+  items: [],
+  search: '',
+  category: 0,
+  order: '',
   page: 1
 };
 
@@ -19,14 +22,17 @@ export const homeSlice = createSlice({
   name: 'home',
   initialState,
   reducers: {
+    setItems (state, { payload }: PayloadAction<IPizza[]>) {
+      state.items = payload
+    },
     setSearchValue (state, { payload }: PayloadAction<string>) {
-      state.searchValue = payload;
+      state.search = payload;
     },
     setCategory (state, { payload }: PayloadAction<number>) {
-      state.pizzaCategory = payload;
+      state.category = payload;
     },
     setSortOrder (state, { payload }: PayloadAction<string>) {
-      state.sortOrder = payload
+      state.order = payload
     },
     setPage (state, { payload }: PayloadAction<number>) {
       state.page = payload
@@ -34,6 +40,6 @@ export const homeSlice = createSlice({
   },
 });
 
-export const { setSearchValue, setCategory, setSortOrder, setPage } = homeSlice.actions;
+export const { setSearchValue, setCategory, setSortOrder, setPage, setItems } = homeSlice.actions;
 
 export default homeSlice.reducer;

@@ -8,9 +8,9 @@ import { setSearchValue } from 'redux/slices/homeSlice';
 import s from './Header.module.scss';
 
 export const Header: FC = () => {
-  const { searchVal, items } = useAppSelector(
+  const { search, items } = useAppSelector(
     ({ home, cart }) => ({
-      searchVal: home.searchValue,
+      search: home.search,
       items: cart.items,
     }),
   );
@@ -35,7 +35,7 @@ export const Header: FC = () => {
           </div>
         </div>
       </Link>
-      <InputSearch searchVal={searchVal} onSetSearchVal={onInputSearchChange} />
+      <InputSearch searchVal={search} onSetSearchVal={onInputSearchChange} />
       <div className="header__cart">
         <Link to="/cart" className="button button--cart">
           <span>{totalPrice} ₽</span>

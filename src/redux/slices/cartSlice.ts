@@ -4,12 +4,10 @@ import { ICartItem } from 'types';
 
 interface ICartState {
   items: ICartItem[];
-  // totalPrice: number;
 }
 
 const initialState: ICartState = {
   items: [],
-  // totalPrice: 0,
 };
 
 export const cartSlice = createSlice({
@@ -24,11 +22,6 @@ export const cartSlice = createSlice({
       } else {
         existedItem.count++;
       }
-
-      // state.totalPrice = state.items.reduce(
-      //   (sum, item) => item.price * item.count + sum,
-      //   0,
-      // );
     },
     minusPlusItem(
       state,
