@@ -17,11 +17,21 @@ export const Pizza: FC<IPizzaProps> = ({
   sizes,
   price,
 }) => {
-  const [selectedPizzaType, setSelectedPizzaType] = useState(0);
-  const [selectedPizzaSize, setSelectedPizzaSize] = useState(0);
-
   const { items } = useAppSelector(({ cart }) => cart);
   const dispatch = useAppDispatch();
+
+  const pizzaCount = items.find((pizza) => pizza.id === id)?.count;
+  const pizzaType = items.find((pizza) => pizza.id === id)?.type;
+  const pizzaSize = items.find((pizza) => pizza.id === id)?.size;
+
+  const [selectedPizzaType, setSelectedPizzaType] = useState(() => {
+    return pizzaType ? pizzaTypes.indexOf(pizzaType) : 0
+  });
+
+  const [selectedPizzaSize, setSelectedPizzaSize] = useState(() => {
+    return pizzaSize ? sizes.indexOf(pizzaSize) : 0
+  });
+
 
   const onAddPizza = () => {
     const item = {
@@ -36,9 +46,10 @@ export const Pizza: FC<IPizzaProps> = ({
     dispatch(addItem(item));
   };
 
-  const pizzaCount = items.find((pizza) => pizza.id === id)?.count;
-  const pizzaType = items.find((pizza) => pizza.id === id)?.price;
-  // const pizzaType = items.find((pizza) => pizza.type === )?.count;
+
+  if(pizzaType) console.log(pizzaTypes.indexOf(pizzaType));
+  // console.log(pizzaTypes[selectedPizzaType]);
+  
 
   return (
     <div className={s.pizza}>
@@ -53,7 +64,8 @@ export const Pizza: FC<IPizzaProps> = ({
               <li
                 key={type}
                 onClick={() => setSelectedPizzaType(type)}
-                className={selectedPizzaType === type ? `${s.active}` : ''}
+                // className={selectedPizzaType === type ? `${s.active}` : ''}
+                className={types[selectedPizzaType] === type ? `${s.active}` : ''}
               >
                 {pizzaTypes[type]}
               </li>
