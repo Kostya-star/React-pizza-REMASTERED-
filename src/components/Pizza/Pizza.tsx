@@ -1,5 +1,5 @@
 import { ReactComponent as AddPizzaSVG } from 'assets/svg/add-pizza.svg';
-import { FC, useState } from 'react';
+import { FC, useState, useCallback } from 'react';
 import { IPizza } from 'types';
 import s from './Pizza.module.scss';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
@@ -20,16 +20,16 @@ export const Pizza: FC<IPizzaProps> = ({
   const { items } = useAppSelector(({ cart }) => cart);
   const dispatch = useAppDispatch();
 
-  const pizzaCount = items.find((pizza) => pizza.id === id)?.count;
-  const pizzaType = items.find((pizza) => pizza.id === id)?.type;
-  const pizzaSize = items.find((pizza) => pizza.id === id)?.size;
+  const currentPizzaCount = items.find((pizza) => pizza.id === id)?.count;
+  const currentPizzaType = items.find((pizza) => pizza.id === id)?.type;
+  const currentPizzaSize = items.find((pizza) => pizza.id === id)?.size;
 
   const [selectedPizzaType, setSelectedPizzaType] = useState(() => {
-    return pizzaType ? pizzaTypes.indexOf(pizzaType) : 0
+    return currentPizzaType ? pizzaTypes.indexOf(currentPizzaType) : 0
   });
 
   const [selectedPizzaSize, setSelectedPizzaSize] = useState(() => {
-    return pizzaSize ? sizes.indexOf(pizzaSize) : 0
+    return currentPizzaSize ? sizes.indexOf(currentPizzaSize) : 0
   });
 
 
@@ -46,11 +46,6 @@ export const Pizza: FC<IPizzaProps> = ({
     dispatch(addItem(item));
   };
 
-
-  if(pizzaType) console.log(pizzaTypes.indexOf(pizzaType));
-  // console.log(pizzaTypes[selectedPizzaType]);
-  
-
   return (
     <div className={s.pizza}>
       <div className={s.pizza__container}>
@@ -64,7 +59,6 @@ export const Pizza: FC<IPizzaProps> = ({
               <li
                 key={type}
                 onClick={() => setSelectedPizzaType(type)}
-                // className={selectedPizzaType === type ? `${s.active}` : ''}
                 className={types[selectedPizzaType] === type ? `${s.active}` : ''}
               >
                 {pizzaTypes[type]}
@@ -87,7 +81,7 @@ export const Pizza: FC<IPizzaProps> = ({
           <div className={s.pizza__price}>от {price} ₽</div>
           <button onClick={onAddPizza}>
             <AddPizzaSVG />
-            <span>Добавить {pizzaCount ?? null}</span>
+            <span>Добавить {currentPizzaCount ?? null}</span>
           </button>
         </div>
       </div>
