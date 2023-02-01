@@ -2,12 +2,14 @@ import { ReactComponent as CartSVG } from 'assets/svg/cart.svg';
 import { ReactComponent as PizzaLogo } from 'assets/svg/pizza-logo.svg';
 import { InputSearch } from 'components/InputSearch/InputSearch';
 import { FC } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { setSearchValue } from 'redux/slices/homeSlice';
 import s from './Header.module.scss';
 
 export const Header: FC = () => {
+  const location = useLocation();
+
   const { search, items } = useAppSelector(({ home, cart }) => ({
     search: home.search,
     items: cart.items,
@@ -36,15 +38,22 @@ export const Header: FC = () => {
           </div>
         </div>
       </Link>
-      <InputSearch searchVal={search} onSetSearchVal={onInputSearchChange} />
-      <div className="header__cart">
-        <Link to="/cart" className="button button--cart">
-          <span>{totalPrice} ₽</span>
-          <div className="button__delimiter"></div>
-          <CartSVG />
-          <span>{itemsCount}</span>
-        </Link>
-      </div>
+      {location.pathname === '/' && (
+        <>
+          <InputSearch
+            searchVal={search}
+            onSetSearchVal={onInputSearchChange}
+          />
+          <div className="header__cart">
+            <Link to="/cart" className="button button--cart">
+              <span>{totalPrice} ₽</span>
+              <div className="button__delimiter"></div>
+              <CartSVG />
+              <span>{itemsCount}</span>
+            </Link>
+          </div>
+        </>
+      )}
     </div>
   );
 };
