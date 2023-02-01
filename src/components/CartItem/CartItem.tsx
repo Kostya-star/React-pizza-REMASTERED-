@@ -4,7 +4,7 @@ import { ReactComponent as PlusSVG } from 'assets/svg/plus.svg';
 import { FC } from 'react';
 import { useAppDispatch } from 'redux/hooks';
 import { deleteItem, minusPlusItem } from 'redux/slices/cartSlice';
-import { ICartItem } from 'types';
+import { ICartItem } from 'types/types';
 import s from './CartItem.module.scss';
 
 interface ICartItemProps extends ICartItem {}
@@ -20,8 +20,8 @@ export const CartItem: FC<ICartItemProps> = ({
 }) => {
   const dispatch = useAppDispatch();
 
-  const onMinusPlusHandle = (id: number, val: string) => {
-    dispatch(minusPlusItem({ id, val }))
+  const onMinusPlusHandle = (id: string, val: string) => {
+    dispatch(minusPlusItem({ id, val }));
   };
 
   return (

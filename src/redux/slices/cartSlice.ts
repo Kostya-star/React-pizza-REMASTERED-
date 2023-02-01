@@ -1,7 +1,7 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import { ICartItem } from 'types';
 import { RootState } from 'redux/store';
+import { ICartItem } from 'types/types';
 
 interface ICartState {
   items: ICartItem[];
@@ -26,7 +26,7 @@ export const cartSlice = createSlice({
     },
     minusPlusItem(
       state,
-      { payload }: PayloadAction<{ id: number; val: string }>,
+      { payload }: PayloadAction<{ id: string; val: string }>,
     ) {
       const minusPlusItem = state.items.find((item) => item.id === payload.id);
 
@@ -40,7 +40,7 @@ export const cartSlice = createSlice({
         minusPlusItem.count = minusPlusItem.count + 1;
       }
     },
-    deleteItem(state, { payload }: PayloadAction<number>) {
+    deleteItem(state, { payload }: PayloadAction<string>) {
       state.items = state.items.filter((item) => item.id !== payload);
     },
     clearCart(state) {
@@ -49,7 +49,7 @@ export const cartSlice = createSlice({
   },
 });
 
-export const cartSelector = ({ cart }: RootState) => cart
+export const cartSelector = ({ cart }: RootState) => cart;
 
 export const { addItem, minusPlusItem, deleteItem, clearCart } =
   cartSlice.actions;

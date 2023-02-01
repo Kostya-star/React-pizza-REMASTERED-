@@ -1,9 +1,10 @@
 import { ReactComponent as AddPizzaSVG } from 'assets/svg/add-pizza.svg';
-import { FC, useState, useCallback } from 'react';
-import { IPizza } from 'types';
-import s from './Pizza.module.scss';
+import { FC, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { addItem, cartSelector } from 'redux/slices/cartSlice';
+import { IPizza } from 'types/types';
+import s from './Pizza.module.scss';
 
 interface IPizzaProps extends IPizza {}
 
@@ -19,19 +20,19 @@ export const Pizza: FC<IPizzaProps> = ({
 }) => {
   const { items } = useAppSelector(cartSelector);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const currentPizzaCount = items.find((pizza) => pizza.id === id)?.count;
   const currentPizzaType = items.find((pizza) => pizza.id === id)?.type;
   const currentPizzaSize = items.find((pizza) => pizza.id === id)?.size;
 
   const [selectedPizzaType, setSelectedPizzaType] = useState(() => {
-    return currentPizzaType ? pizzaTypes.indexOf(currentPizzaType) : 0
+    return currentPizzaType ? pizzaTypes.indexOf(currentPizzaType) : 0;
   });
 
   const [selectedPizzaSize, setSelectedPizzaSize] = useState(() => {
-    return currentPizzaSize ? sizes.indexOf(currentPizzaSize) : 0
+    return currentPizzaSize ? sizes.indexOf(currentPizzaSize) : 0;
   });
-
 
   const onAddPizza = () => {
     const item = {
@@ -49,17 +50,19 @@ export const Pizza: FC<IPizzaProps> = ({
   return (
     <div className={s.pizza}>
       <div className={s.pizza__container}>
-        <a href="/pizza/8">
+        <Link to={`pizza/${id}`}>
           <img className={s.pizza__image} src={imageUrl} alt="Pizza" />
           <h4 className={s.pizza__title}>{title}</h4>
-        </a>
+        </Link>
         <div className={s.pizza__selector}>
           <ul>
             {types.map((type) => (
               <li
                 key={type}
                 onClick={() => setSelectedPizzaType(type)}
-                className={types[selectedPizzaType] === type ? `${s.active}` : ''}
+                className={
+                  types[selectedPizzaType] === type ? `${s.active}` : ''
+                }
               >
                 {pizzaTypes[type]}
               </li>

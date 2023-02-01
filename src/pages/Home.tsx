@@ -5,7 +5,7 @@ import { Skeleton } from 'components/Skeleton/Skeleton';
 import { SortDropdown } from 'components/SortDropdown/SortDropdown';
 import qs from 'qs';
 import { FC, useEffect, useRef } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAppSelector } from 'redux/hooks';
 import {
   fetchPizzas,

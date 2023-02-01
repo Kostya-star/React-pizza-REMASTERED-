@@ -1,9 +1,10 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { IPizza } from 'types';
-import axios from 'axios';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { baseRequest } from 'api/baseRequest';
+import axios from 'axios';
 import { RootState } from 'redux/store';
+import { getPizzasResponse } from 'types/getPizzasResponse';
+import { IPizza } from 'types/types';
 
 interface IQueryParams {
   category: number;
@@ -16,14 +17,14 @@ export const fetchPizzas = createAsyncThunk(
   async (params: IQueryParams) => {
     const { category, order, search } = params;
 
-    const resp = await axios.get(`${baseRequest}`, {
+    const resp = await axios.get<getPizzasResponse[]>(`${baseRequest}`, {
       params: {
         ...(category > 0 ? { category } : {}),
         ...(order ? { sortBy: order } : {}),
         ...(search ? { search } : {}),
       },
     });
-    // console.log(resp.data);
+    // console.log(typeof resp.data[0].id);
 
     return resp.data;
   },
@@ -81,7 +82,6 @@ export const homeSlice = createSlice({
 
 export const homeSelector = ({ home }: RootState) => home;
 
-export const { setSearchValue, setCategory, setSortOrder } =
-  homeSlice.actions;
+export const { setSearchValue, setCategory, setSortOrder } = homeSlice.actions;
 
 export default homeSlice.reducer;
