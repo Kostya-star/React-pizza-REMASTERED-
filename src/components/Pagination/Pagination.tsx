@@ -1,9 +1,10 @@
 import { FC } from 'react';
+import { homeSelector } from 'redux/slices/homeSlice';
 import { useAppDispatch } from './../../redux/hooks';
 import s from './Pagination.module.scss';
 
 export const Pagination: FC = () => {
-  // const currentPage = useAppSelector(({ home }) => home.page);
+  // const currentPage = useAppSelector(homeSelector);
   const dispatch = useAppDispatch();
 
   // if (pizzasCount === 0) return null

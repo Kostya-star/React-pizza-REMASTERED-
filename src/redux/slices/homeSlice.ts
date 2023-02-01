@@ -3,6 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { IPizza } from 'types';
 import axios from 'axios';
 import { baseRequest } from 'api/baseRequest';
+import { RootState } from 'redux/store';
 
 interface IQueryParams {
   category: number;
@@ -77,6 +78,8 @@ export const homeSlice = createSlice({
       });
   },
 });
+
+export const homeSelector = ({ home }: RootState) => home;
 
 export const { setSearchValue, setCategory, setSortOrder } =
   homeSlice.actions;

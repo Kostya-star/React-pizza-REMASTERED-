@@ -8,17 +8,18 @@ import { setSearchValue } from 'redux/slices/homeSlice';
 import s from './Header.module.scss';
 
 export const Header: FC = () => {
-  const { search, items } = useAppSelector(
-    ({ home, cart }) => ({
-      search: home.search,
-      items: cart.items,
-    }),
-  );
+  const { search, items } = useAppSelector(({ home, cart }) => ({
+    search: home.search,
+    items: cart.items,
+  }));
   const dispatch = useAppDispatch();
 
-  const itemsCount = items.reduce((sum, item) => item.count + sum, 0)
+  const itemsCount = items.reduce((sum, item) => item.count + sum, 0);
 
-  const totalPrice = items.reduce((sum, item) => (item.count * item.price) + sum, 0)
+  const totalPrice = items.reduce(
+    (sum, item) => item.count * item.price + sum,
+    0,
+  );
 
   const onInputSearchChange = (value: string) => {
     dispatch(setSearchValue(value));

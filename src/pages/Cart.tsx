@@ -4,11 +4,11 @@ import { ReactComponent as ArrowBackSVG } from 'assets/svg/arrow-back.svg';
 import { Link } from 'react-router-dom';
 import { CartItem } from 'components/CartItem/CartItem';
 import { useAppSelector, useAppDispatch } from 'redux/hooks';
-import { clearCart } from 'redux/slices/cartSlice';
+import { clearCart, cartSelector } from 'redux/slices/cartSlice';
 import { CartEmpty } from 'components/CartEmpty/CartEmpty';
 
 export const Cart = () => {
-  const items = useAppSelector(({ cart }) => cart.items);
+  const { items } = useAppSelector(cartSelector);
   const dispatch = useAppDispatch();
 
   const itemsCount = items.reduce((sum, item) => item.count + sum, 0);

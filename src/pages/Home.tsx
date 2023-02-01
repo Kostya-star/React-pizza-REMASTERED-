@@ -9,6 +9,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppSelector } from 'redux/hooks';
 import {
   fetchPizzas,
+  homeSelector,
   setCategory,
   setSearchValue,
   setSortOrder,
@@ -19,9 +20,7 @@ export const Home: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { items, search, category, order, status } = useAppSelector(
-    ({ home }) => home,
-  );
+  const { items, search, category, order, status } = useAppSelector(homeSelector);
   const dispatch = useAppDispatch();
 
   const isMounted = useRef(false);

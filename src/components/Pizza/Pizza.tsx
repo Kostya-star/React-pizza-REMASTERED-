@@ -3,7 +3,7 @@ import { FC, useState, useCallback } from 'react';
 import { IPizza } from 'types';
 import s from './Pizza.module.scss';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
-import { addItem } from 'redux/slices/cartSlice';
+import { addItem, cartSelector } from 'redux/slices/cartSlice';
 
 interface IPizzaProps extends IPizza {}
 
@@ -17,7 +17,7 @@ export const Pizza: FC<IPizzaProps> = ({
   sizes,
   price,
 }) => {
-  const { items } = useAppSelector(({ cart }) => cart);
+  const { items } = useAppSelector(cartSelector);
   const dispatch = useAppDispatch();
 
   const currentPizzaCount = items.find((pizza) => pizza.id === id)?.count;
