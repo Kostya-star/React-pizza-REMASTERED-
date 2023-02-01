@@ -14,16 +14,17 @@ import {
   setSearchValue,
   setCategory,
   setSortOrder,
-  setItems,
+  fetchPizzas,
 } from 'redux/slices/homeSlice';
+import { ServerError } from 'components/ServerError/ServerError';
 
 export const Home: FC = () => {
-  const [isLoading, setLoading] = useState(false);
-
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { items, search, category, order } = useAppSelector(({ home }) => home);
+  const { items, search, category, order, status } = useAppSelector(
+    ({ home }) => home,
+  );
   const dispatch = useAppDispatch();
 
   const isMounted = useRef(false);
@@ -42,27 +43,7 @@ export const Home: FC = () => {
   }, [location.search]);
 
   useEffect(() => {
-    setLoading(true);
-    const fetchPizzas = async () => {
-      const resp = await axios
-        .get(`${baseRequest}`, {
-          params: {
-            ...(category > 0 ? { category } : {}),
-            ...(order ? { sortBy: order } : {}),
-            ...(search ? { search } : {}),
-          },
-        })
-        .catch((e) => {
-          alert('smth went wrong');
-          console.log(e);
-        });
-
-      if (resp?.data.length) {
-        dispatch(setItems(resp.data));
-      }
-      setLoading(false);
-    };
-    void fetchPizzas();
+    void dispatch(fetchPizzas({ category, order, search }));
   }, [category, order, search]);
 
   useEffect(() => {
@@ -82,6 +63,11 @@ export const Home: FC = () => {
     dispatch(setCategory(category));
   };
 
+  const pizzas = items.map((pizza) => <Pizza key={pizza.id} {...pizza} />);
+  const skeleton = [...new Array(6)].map((_, index) => (
+    <Skeleton key={index} />
+  ));
+
   return (
     <>
       <div className="content__top">
@@ -91,12 +77,16 @@ export const Home: FC = () => {
         />
         <SortDropdown sortOrder={order} setSortOrder={onSetSortOrderHandler} />
       </div>
-      <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">
-        {isLoading
-          ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
-          : items.map((pizza) => <Pizza key={pizza.id} {...pizza} />)}
-      </div>
+      <h2 className="content__title">All pizzas</h2>
+      {status === 'error' ? (
+        <div className="content__error-info">
+          <ServerError />
+        </div>
+      ) : (
+        <div className="content__items">
+          {status === 'loading' ? skeleton : pizzas}
+        </div>
+      )}
       {/* <Pagination /> */}
     </>
   );
