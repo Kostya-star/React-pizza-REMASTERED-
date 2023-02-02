@@ -21,7 +21,6 @@ export const Cart = () => {
   if (!items?.length) {
     return <CartEmpty />;
   }
-  console.log(items);
 
   return (
     <div className="container container--cart">

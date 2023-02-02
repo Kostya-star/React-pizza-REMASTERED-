@@ -28,8 +28,6 @@ export const cartSlice = createSlice({
       state,
       { payload }: PayloadAction<{ id: number; val: string }>,
     ) {
-      console.log(payload);
-      
       const minusPlusItem = state.items.find((item) => item.id === payload.id);
 
       if (
