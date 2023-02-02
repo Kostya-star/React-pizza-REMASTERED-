@@ -43,7 +43,7 @@ const initialState: IHomeState = {
   search: '',
   category: 0,
   order: 'rating',
-  status: '',
+  status: '', // loading | success | error
 };
 
 export const homeSlice = createSlice({
