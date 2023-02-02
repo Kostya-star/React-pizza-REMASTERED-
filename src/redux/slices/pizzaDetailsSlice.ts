@@ -2,12 +2,13 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { baseRequest } from 'api/baseRequest';
 import axios from 'axios';
+import { getPizzaResponse } from 'types/getPizzaResponse';
 import { IPizza } from 'types/types';
 
 export const fetchPizzaById = createAsyncThunk(
   'pizzaDetails/fetchById',
   async (id: number) => {
-    const resp = await axios.get(`${baseRequest}/${id}`);
+    const resp = await axios.get<getPizzaResponse>(`${baseRequest}/${id}`);
     return resp.data;
   },
 );
