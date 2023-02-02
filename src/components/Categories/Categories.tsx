@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import s from './Categories.module.scss';
 
 const pizzaTypes = ['All', 'Meat', 'Vegetarian', 'Spicy', 'Mixed'];
@@ -8,7 +8,8 @@ interface ICategoriesProps {
   setCategory: (category: number) => void;
 }
 
-export const Categories: FC<ICategoriesProps> = ({ category, setCategory }) => {
+export const Categories = memo(({ category, setCategory }: ICategoriesProps) => {
+  Categories.displayName = 'Categories'
   return (
     <div className={s.categories}>
       <ul>
@@ -24,4 +25,4 @@ export const Categories: FC<ICategoriesProps> = ({ category, setCategory }) => {
       </ul>
     </div>
   );
-};
+});

@@ -4,7 +4,7 @@ import { ServerError } from 'components/ServerError/ServerError';
 import { Skeleton } from 'components/Skeleton/Skeleton';
 import { SortDropdown } from 'components/SortDropdown/SortDropdown';
 import qs from 'qs';
-import { FC, useEffect, useRef } from 'react';
+import { FC, useEffect, useRef, useCallback } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useAppSelector } from 'redux/hooks';
 import {
@@ -51,13 +51,13 @@ export const Home: FC = () => {
     navigate(`?${queryString}`);
   }, [category, order, search]);
 
-  const onSetSortOrderHandler = (sort: string) => {
+  const onSetSortOrderHandler = useCallback((sort: string) => {
     dispatch(setSortOrder(sort));
-  };
+  }, []);
 
-  const onSetPizzaCategoryHandler = (category: number) => {
+  const onSetPizzaCategoryHandler = useCallback((category: number) => {
     dispatch(setCategory(category));
-  };
+  }, []);
 
   const pizzas = items.map((pizza) => (
     <Pizza key={pizza.id} pizza={{ ...pizza, id: Number(pizza.id) }} />
