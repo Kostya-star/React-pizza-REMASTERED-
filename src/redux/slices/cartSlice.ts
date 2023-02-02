@@ -30,14 +30,12 @@ export const cartSlice = createSlice({
     ) {
       const minusPlusItem = state.items.find((item) => item.id === payload.id);
 
-      if (
-        minusPlusItem &&
-        minusPlusItem.count !== 0 &&
-        payload.val === 'minus'
-      ) {
-        minusPlusItem.count = minusPlusItem.count - 1;
-      } else if (minusPlusItem && payload.val === 'plus') {
-        minusPlusItem.count = minusPlusItem.count + 1;
+      if(minusPlusItem) {
+        if (payload.val === 'minus') {
+          minusPlusItem.count = minusPlusItem.count - 1;
+        } else if (payload.val === 'plus') {
+          minusPlusItem.count = minusPlusItem.count + 1;
+        }
       }
     },
     deleteItem(state, { payload }: PayloadAction<number>) {

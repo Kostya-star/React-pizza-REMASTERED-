@@ -66,18 +66,23 @@
     border: 2px solid #fe5f1e;
     width: 32px;
     height: 32px;
+
     &:hover {
       background-color: #fe5f1e;
+
       svg {
         path {
           fill: white
         }
       }
     }
+
     &_clear {
       border-color: #ddd;
+
       &:hover {
         background-color: black;
+
         svg {
           path {
             fill: white
@@ -85,10 +90,31 @@
         }
       }
     }
+
     &:active {
       transform: translateY(1px);
     }
+
+    &:disabled {
+      border: 2px solid #ddd;
+      color: green;
+
+      &:active {
+        transform: none;
+      }
+
+      &:hover {
+        background-color: transparent;
+      }
+
+      svg {
+        path {
+          fill: #ddd
+        }
+      }
+    }
   }
+
   &_price {
     display: flex;
     align-items: center;
@@ -101,6 +127,7 @@
       letter-spacing: 0.01em;
     }
   }
+
   &_remove {
     display: flex;
     align-items: center;

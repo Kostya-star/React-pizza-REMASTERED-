@@ -37,6 +37,7 @@ export const CartItem: FC<ICartItemProps> = ({
       </div>
       <div className={s.cart__item_count}>
         <button
+          disabled={count === 1}
           onClick={() => onMinusPlusHandle(id, 'minus')}
           className={s.cart__item_btn}
         >
