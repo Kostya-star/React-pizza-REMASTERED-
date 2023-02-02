@@ -1,5 +1,5 @@
 export interface IPizza {
-  id: string;
+  id: number;
   imageUrl: string;
   title: string;
   types: number[];

@@ -20,7 +20,7 @@ export const CartItem: FC<ICartItemProps> = ({
 }) => {
   const dispatch = useAppDispatch();
 
-  const onMinusPlusHandle = (id: string, val: string) => {
+  const onMinusPlusHandle = (id: number, val: string) => {
     dispatch(minusPlusItem({ id, val }));
   };
 

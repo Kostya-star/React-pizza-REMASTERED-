@@ -59,7 +59,9 @@ export const Home: FC = () => {
     dispatch(setCategory(category));
   };
 
-  const pizzas = items.map((pizza) => <Pizza key={pizza.id} {...pizza} />);
+  const pizzas = items.map((pizza) => (
+    <Pizza key={pizza.id} pizza={{ ...pizza, id: Number(pizza.id) }} />
+  ));
   const skeleton = [...new Array(6)].map((_, index) => (
     <Skeleton key={index} />
   ));

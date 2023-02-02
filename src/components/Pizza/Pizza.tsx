@@ -1,26 +1,22 @@
 import { ReactComponent as AddPizzaSVG } from 'assets/svg/add-pizza.svg';
 import { FC, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { addItem, cartSelector } from 'redux/slices/cartSlice';
 import { IPizza } from 'types/types';
 import s from './Pizza.module.scss';
 
-interface IPizzaProps extends IPizza {}
+interface IPizzaProps {
+  pizza: IPizza;
+}
 
 const pizzaTypes = ['тонкое', 'традиционное'];
 
-export const Pizza: FC<IPizzaProps> = ({
-  id,
-  imageUrl,
-  title,
-  types,
-  sizes,
-  price,
-}) => {
+export const Pizza: FC<IPizzaProps> = ({ pizza }) => {
   const { items } = useAppSelector(cartSelector);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+
+  const { id, imageUrl, title, types, sizes, price } = pizza;
 
   const currentPizzaCount = items.find((pizza) => pizza.id === id)?.count;
   const currentPizzaType = items.find((pizza) => pizza.id === id)?.type;

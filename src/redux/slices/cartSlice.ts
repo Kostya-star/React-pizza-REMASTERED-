@@ -26,8 +26,10 @@ export const cartSlice = createSlice({
     },
     minusPlusItem(
       state,
-      { payload }: PayloadAction<{ id: string; val: string }>,
+      { payload }: PayloadAction<{ id: number; val: string }>,
     ) {
+      console.log(payload);
+      
       const minusPlusItem = state.items.find((item) => item.id === payload.id);
 
       if (
@@ -40,7 +42,7 @@ export const cartSlice = createSlice({
         minusPlusItem.count = minusPlusItem.count + 1;
       }
     },
-    deleteItem(state, { payload }: PayloadAction<string>) {
+    deleteItem(state, { payload }: PayloadAction<number>) {
       state.items = state.items.filter((item) => item.id !== payload);
     },
     clearCart(state) {
