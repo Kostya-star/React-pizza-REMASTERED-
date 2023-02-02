@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { fetchPizzaById } from 'redux/slices/pizzaDetailsSlice';
 import { useAppDispatch, useAppSelector } from './../redux/hooks';
 
@@ -19,21 +19,26 @@ export const PizzaDetails = () => {
 
   if (status === 'error') {
     alert('Sorry, something went wrong!');
-    navigate('/')
-    return null
+    navigate('/');
+    return null;
   }
 
   return (
-    <div className="pizza_details">
-      {status === 'loading' ? (
-        <div>Loading...</div>
-      ) : (
-        <>
-          <img src={pizza?.imageUrl} alt="pizza" />
-          <h2>{pizza?.title}</h2>
-          <span>{pizza?.price} ₽ rub</span>
-        </>
-      )}
-    </div>
+    <>
+      <div className="pizza_details">
+        {status === 'loading' ? (
+          <div>Loading...</div>
+        ) : (
+          <>
+            <img src={pizza?.imageUrl} alt="pizza" />
+            <h2>{pizza?.title}</h2>
+            <span>{pizza?.price} ₽ rub</span>
+          </>
+        )}
+      </div>
+      <Link to="/" className="button" style={{ fontSize: '20px' }}>
+        Go home
+      </Link>
+    </>
   );
 };
