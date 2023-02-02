@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { baseRequest } from 'api/baseRequest';
 import axios from 'axios';
 import qs from 'qs';
@@ -8,11 +8,14 @@ import { IPizza } from 'types/types';
 export const PizzaDetails = () => {
   const [pizza, setPizza] = useState<IPizza | null>(null)
   const { id } = useParams()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchPizzaById = async () => {
       const resp = await axios.get(`${baseRequest}/${id}`).catch(e => {
         console.log(e);        
+        alert('Something went wrong')
+        navigate('/')
       })
       if(resp?.status === 200) {
         setPizza(resp.data)

@@ -29,7 +29,7 @@ export const Header: FC = () => {
 
   return (
     <div className={s.header}>
-      <Link to="">
+      <Link to="" className={location.pathname === '/' ? s.link_disabled : ''}>
         <div className={s.header__logo}>
           <PizzaLogo />
           <div>

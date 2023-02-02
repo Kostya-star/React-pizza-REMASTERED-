@@ -25,6 +25,11 @@
       color: #7b7b7b;
     }
   }
+  a {
+    &.link_disabled {
+      pointer-events: none;
+    }
+  }
 }
 
 // MEDIA
