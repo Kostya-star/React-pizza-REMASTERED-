@@ -24,8 +24,6 @@ export const fetchPizzas = createAsyncThunk(
         ...(search ? { search } : {}),
       },
     });
-    // console.log(typeof resp.data[0].id);
-
     return resp.data;
   },
 );

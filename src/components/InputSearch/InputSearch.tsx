@@ -1,56 +1,44 @@
 import { ReactComponent as CloseSVG } from 'assets/svg/close.svg';
 import { ReactComponent as SearchGlassSVG } from 'assets/svg/search-glass.svg';
-import debounce from 'lodash.debounce';
-import { FC, useCallback, useEffect, useRef, useState } from 'react';
+import { memo, useRef, useState } from 'react';
 import s from './InputSearch.module.scss';
 
 interface InputSearchProps {
   searchVal: string;
-  onSetSearchVal: (val: string) => void;
+  onDebounceSearch: (val: string) => void;
 }
 
-export const InputSearch: FC<InputSearchProps> = ({
-  searchVal,
-  onSetSearchVal,
-}) => {
-  const [localVal, setLocalVal] = useState('');
+export const InputSearch = memo(
+  ({ searchVal, onDebounceSearch }: InputSearchProps) => {
+    InputSearch.displayName = 'InputSearch';
+    const [localVal, setLocalVal] = useState(searchVal);
+    
+    const searchRef = useRef<HTMLInputElement>(null);
 
-  const searchRef = useRef<HTMLInputElement>(null);
+    const onSearchChange = (value: string) => {
+      setLocalVal(value);
+      onDebounceSearch(value);
+    };
 
-  useEffect(() => {
-    setLocalVal(searchVal);
-  }, [searchVal]);
+    const onClearSearch = () => {
+      setLocalVal('');
+      onDebounceSearch('');
+      searchRef.current?.focus();
+    };
 
-  const debouncedSearch = useCallback(
-    debounce((value: string) => {
-      onSetSearchVal(value);
-    }, 700),
-    [],
-  );
-
-  const onSearchChange = (value: string) => {
-    setLocalVal(value);
-    debouncedSearch(value);
-  };
-
-  const onClearSearch = () => {
-    setLocalVal('');
-    onSetSearchVal('');
-    searchRef.current?.focus();
-  };
-
-  return (
-    <div className={s.search}>
-      <SearchGlassSVG />
-      <input
-        // defaultValue={searchVal}
-        value={localVal}
-        onChange={(e) => onSearchChange(e.target.value)}
-        type="text"
-        ref={searchRef}
-        placeholder="Search"
-      />
-      {localVal && <CloseSVG onClick={onClearSearch} />}
-    </div>
-  );
-};
+    return (
+      <div className={s.search}>
+        <SearchGlassSVG />
+        <input
+          // defaultValue={searchVal}
+          value={localVal}
+          onChange={(e) => onSearchChange(e.target.value)}
+          type="text"
+          ref={searchRef}
+          placeholder="Search"
+        />
+        {localVal && <CloseSVG onClick={onClearSearch} />}
+      </div>
+    );
+  },
+);

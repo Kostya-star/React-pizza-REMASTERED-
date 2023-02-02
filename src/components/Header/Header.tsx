@@ -1,7 +1,8 @@
 import { ReactComponent as CartSVG } from 'assets/svg/cart.svg';
 import { ReactComponent as PizzaLogo } from 'assets/svg/pizza-logo.svg';
 import { InputSearch } from 'components/InputSearch/InputSearch';
-import { FC } from 'react';
+import debounce from 'lodash.debounce';
+import { FC, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { setSearchValue } from 'redux/slices/homeSlice';
@@ -10,9 +11,10 @@ import s from './Header.module.scss';
 export const Header: FC = () => {
   const location = useLocation();
 
-  const { search, items } = useAppSelector(({ home, cart }) => ({
+  const { search, items, status } = useAppSelector(({ home, cart }) => ({
     search: home.search,
-    items: cart.items,
+    status: home.status,
+    items: cart.items
   }));
   const dispatch = useAppDispatch();
 
@@ -23,9 +25,10 @@ export const Header: FC = () => {
     0,
   );
 
-  const onInputSearchChange = (value: string) => {
-    dispatch(setSearchValue(value));
-  };
+  const onDebouncedSearch = useCallback(
+    debounce((value: string) => {
+      dispatch(setSearchValue(value));
+    }, 700), []);
 
   return (
     <div className={s.header}>
@@ -42,7 +45,7 @@ export const Header: FC = () => {
         <>
           <InputSearch
             searchVal={search}
-            onSetSearchVal={onInputSearchChange}
+            onDebounceSearch={onDebouncedSearch}
           />
           <div className="header__cart">
             <Link to="/cart" className="button button--cart">

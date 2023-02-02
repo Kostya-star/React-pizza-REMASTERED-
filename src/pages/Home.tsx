@@ -20,7 +20,8 @@ export const Home: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { items, search, category, order, status } = useAppSelector(homeSelector);
+  const { items, search, category, order, status } =
+    useAppSelector(homeSelector);
   const dispatch = useAppDispatch();
 
   const isMounted = useRef(false);
