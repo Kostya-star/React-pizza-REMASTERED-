@@ -11,9 +11,8 @@ import s from './Header.module.scss';
 export const Header: FC = () => {
   const location = useLocation();
 
-  const { search, items, status } = useAppSelector(({ home, cart }) => ({
+  const { search, items } = useAppSelector(({ home, cart }) => ({
     search: home.search,
-    status: home.status,
     items: cart.items
   }));
   const dispatch = useAppDispatch();
