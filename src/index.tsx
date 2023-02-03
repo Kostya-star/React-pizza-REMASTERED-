@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, HashRouter } from 'react-router-dom';
 import App from './App';
 import { store, persistor } from 'redux/store';
 import { Provider } from 'react-redux';
@@ -9,11 +9,11 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 root.render(
-  <BrowserRouter>
+  <HashRouter>
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-      <App />
+        <App />
       </PersistGate>
     </Provider>
-  </BrowserRouter>,
+  </HashRouter>,
 );
