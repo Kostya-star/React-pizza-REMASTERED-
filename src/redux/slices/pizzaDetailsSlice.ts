@@ -4,6 +4,7 @@ import { baseRequest } from 'api/baseRequest';
 import axios from 'axios';
 import { getPizzaResponse } from 'types/getPizzaResponse';
 import { IPizza } from 'types/types';
+import { Status } from 'types/enum';
 
 export const fetchPizzaById = createAsyncThunk(
   'pizzaDetails/fetchById',
@@ -15,12 +16,12 @@ export const fetchPizzaById = createAsyncThunk(
 
 interface IPizzaDetailsState {
   item: IPizza | null;
-  status: string;
+  status: Status;
 }
 
 const initialState: IPizzaDetailsState = {
   item: null,
-  status: '', // loading | success | error,
+  status: Status.LOADING, // loading | success | error,
 };
 
 export const pizzaDetailsSlice = createSlice({
@@ -30,18 +31,18 @@ export const pizzaDetailsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchPizzaById.pending, (state) => {
-        state.status = 'loading';
+        state.status = Status.LOADING;
         state.item = null;
       })
       .addCase(
         fetchPizzaById.fulfilled,
         (state, { payload }: PayloadAction<IPizza>) => {
           state.item = payload;
-          state.status = 'success';
+          state.status = Status.SUCCESS;
         },
       )
       .addCase(fetchPizzaById.rejected, (state) => {
-        state.status = 'error';
+        state.status = Status.ERROR;
         state.item = null;
       });
   },

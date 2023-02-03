@@ -6,6 +6,8 @@ import { FC, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { setSearchValue } from 'redux/slices/homeSlice';
+import { getAddedItemsCount } from 'utils/getAddedItemsCount';
+import { getAddedItemsPrice } from 'utils/getAddedItemsPrice';
 import s from './Header.module.scss';
 
 export const Header: FC = () => {
@@ -13,21 +15,20 @@ export const Header: FC = () => {
 
   const { search, items } = useAppSelector(({ home, cart }) => ({
     search: home.search,
-    items: cart.items
+    items: cart.items,
   }));
   const dispatch = useAppDispatch();
 
-  const itemsCount = items.reduce((sum, item) => item.count + sum, 0);
+  const itemsCount = getAddedItemsCount(items)
 
-  const totalPrice = items.reduce(
-    (sum, item) => item.count * item.price + sum,
-    0,
-  );
+  const totalPrice = getAddedItemsPrice(items)
 
   const onDebouncedSearch = useCallback(
     debounce((value: string) => {
       dispatch(setSearchValue(value));
-    }, 700), []);
+    }, 700),
+    [],
+  );
 
   return (
     <div className={s.header}>

@@ -15,6 +15,7 @@ import {
   setSortOrder,
 } from 'redux/slices/homeSlice';
 import { useAppDispatch } from './../redux/hooks';
+import { Status } from 'types/enum';
 
 export const Home: FC = () => {
   const navigate = useNavigate();
@@ -77,13 +78,13 @@ export const Home: FC = () => {
         <SortDropdown sortOrder={order} setSortOrder={onSetSortOrderHandler} />
       </div>
       <h2 className="content__title">All pizzas</h2>
-      {status === 'error' ? (
+      {status === Status.ERROR ? (
         <div className="content__error-info">
           <ServerError />
         </div>
       ) : (
         <div className="content__items">
-          {status === 'loading' ? skeleton : pizzas}
+          {status === Status.LOADING ? skeleton : pizzas}
         </div>
       )}
       {/* <Pagination /> */}

@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { baseRequest } from 'api/baseRequest';
 import axios from 'axios';
 import { RootState } from 'redux/store';
+import { Status } from 'types/enum';
 import { getPizzasResponse } from 'types/getPizzasResponse';
 import { IPizza } from 'types/types';
 
@@ -33,7 +34,7 @@ export interface IHomeState {
   search: string;
   category: number;
   order: string;
-  status: string;
+  status: Status;
 }
 
 const initialState: IHomeState = {
@@ -41,7 +42,7 @@ const initialState: IHomeState = {
   search: '',
   category: 0,
   order: 'rating',
-  status: '', // loading | success | error
+  status: Status.LOADING, // loading | success | error
 };
 
 export const homeSlice = createSlice({
@@ -61,18 +62,18 @@ export const homeSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchPizzas.pending, (state) => {
-        state.status = 'loading';
+        state.status = Status.LOADING;
         state.items = [];
       })
       .addCase(
         fetchPizzas.fulfilled,
         (state, { payload }: PayloadAction<IPizza[]>) => {
-          state.status = 'success';
+          state.status = Status.SUCCESS;
           state.items = payload;
         },
       )
       .addCase(fetchPizzas.rejected, (state) => {
-        state.status = 'error';
+        state.status = Status.ERROR;
         state.items = [];
       });
   },

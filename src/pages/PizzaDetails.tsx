@@ -1,6 +1,7 @@
-import { FC, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { fetchPizzaById } from 'redux/slices/pizzaDetailsSlice';
+import { Status } from 'types/enum';
 import { useAppDispatch, useAppSelector } from './../redux/hooks';
 
 export const PizzaDetails = () => {
@@ -17,7 +18,7 @@ export const PizzaDetails = () => {
     void dispatch(fetchPizzaById(Number(id)));
   }, []);
 
-  if (status === 'error') {
+  if (status === Status.ERROR) {
     alert('Sorry, something went wrong!');
     navigate('/');
     return null;
@@ -26,7 +27,7 @@ export const PizzaDetails = () => {
   return (
     <>
       <div className="pizza_details">
-        {status === 'loading' ? (
+        {status === Status.LOADING ? (
           <div>Loading...</div>
         ) : (
           <>

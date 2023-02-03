@@ -6,17 +6,16 @@ import { CartItem } from 'components/CartItem/CartItem';
 import { useAppSelector, useAppDispatch } from 'redux/hooks';
 import { clearCart, cartSelector } from 'redux/slices/cartSlice';
 import { CartEmpty } from 'components/CartEmpty/CartEmpty';
+import { getAddedItemsCount } from 'utils/getAddedItemsCount';
+import { getAddedItemsPrice } from 'utils/getAddedItemsPrice';
 
 export const Cart = () => {
   const { items } = useAppSelector(cartSelector);
   const dispatch = useAppDispatch();
 
-  const itemsCount = items.reduce((sum, item) => item.count + sum, 0);
+  const itemsCount = getAddedItemsCount(items)
 
-  const totalPrice = items.reduce(
-    (sum, item) => item.count * item.price + sum,
-    0,
-  );
+  const totalPrice = getAddedItemsPrice(items)
 
   if (!items?.length) {
     return <CartEmpty />;
