@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/React-pizza-REMASTERED-/static/css/main.040e464f.css",
+    "main.js": "/React-pizza-REMASTERED-/static/js/main.f4da61e9.js",
+    "static/media/empty-cart.png": "/React-pizza-REMASTERED-/static/media/empty-cart.db905d1f4b063162f25b.png",
+    "static/media/pizza-logo.svg": "/React-pizza-REMASTERED-/static/media/pizza-logo.56ac87032d8f6fdf863326acd06c0d97.svg",
+    "static/media/clear.svg": "/React-pizza-REMASTERED-/static/media/clear.60dc171a81947555c5a49b24036edb3c.svg",
+    "static/media/carriage.svg": "/React-pizza-REMASTERED-/static/media/carriage.0218246c9bc2ba87d7f6b0e3025f93d0.svg",
+    "static/media/cart.svg": "/React-pizza-REMASTERED-/static/media/cart.1b9fdf3db9b9a2031df96817eaa6f67c.svg",
+    "static/media/plus.svg": "/React-pizza-REMASTERED-/static/media/plus.4f975b083ecbbc43ae5e97c96e3ad326.svg",
+    "static/media/delete.svg": "/React-pizza-REMASTERED-/static/media/delete.0a9f3948f3aa2c69e535f6ff956df25b.svg",
+    "index.html": "/React-pizza-REMASTERED-/index.html",
+    "static/media/sort-up.svg": "/React-pizza-REMASTERED-/static/media/sort-up.2db13d3e43ee9ef3e787299474c736b7.svg",
+    "static/media/add-pizza.svg": "/React-pizza-REMASTERED-/static/media/add-pizza.e4f22277e564cdd03a2ca33f96a5b8a2.svg",
+    "static/media/close.svg": "/React-pizza-REMASTERED-/static/media/close.8b865d29e94a3473c6c05a89b4c1d4d9.svg",
+    "static/media/search-glass.svg": "/React-pizza-REMASTERED-/static/media/search-glass.076ea3598b80b695b97f3f049c8731a5.svg",
+    "static/media/arrow-back.svg": "/React-pizza-REMASTERED-/static/media/arrow-back.b1d7cde5e1b0a62167693a71422d09de.svg",
+    "static/media/sort-down.svg": "/React-pizza-REMASTERED-/static/media/sort-down.051995018399538d14a56631f68c1eda.svg",
+    "static/media/minus.svg": "/React-pizza-REMASTERED-/static/media/minus.ca33e672691c880aaa3530654b827ef5.svg",
+    "main.040e464f.css.map": "/React-pizza-REMASTERED-/static/css/main.040e464f.css.map",
+    "main.f4da61e9.js.map": "/React-pizza-REMASTERED-/static/js/main.f4da61e9.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.040e464f.css",
+    "static/js/main.f4da61e9.js"
+  ]
+}
