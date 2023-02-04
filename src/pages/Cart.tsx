@@ -1,21 +1,21 @@
+import { ReactComponent as ArrowBackSVG } from 'assets/svg/arrow-back.svg';
 import { ReactComponent as CarriageSVG } from 'assets/svg/carriage.svg';
 import { ReactComponent as ClearSVG } from 'assets/svg/clear.svg';
-import { ReactComponent as ArrowBackSVG } from 'assets/svg/arrow-back.svg';
-import { Link } from 'react-router-dom';
-import { CartItem } from 'components/CartItem/CartItem';
-import { useAppSelector, useAppDispatch } from 'redux/hooks';
-import { clearCart, cartSelector } from 'redux/slices/cartSlice';
 import { CartEmpty } from 'components/CartEmpty/CartEmpty';
+import { CartItem } from 'components/CartItem/CartItem';
+import { Link } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { cartSelector, clearCart } from 'redux/slices/cartSlice';
 import { getAddedItemsCount } from 'utils/getAddedItemsCount';
 import { getAddedItemsPrice } from 'utils/getAddedItemsPrice';
 
-export const Cart = () => {
+const Cart = () => {
   const { items } = useAppSelector(cartSelector);
   const dispatch = useAppDispatch();
 
-  const itemsCount = getAddedItemsCount(items)
+  const itemsCount = getAddedItemsCount(items);
 
-  const totalPrice = getAddedItemsPrice(items)
+  const totalPrice = getAddedItemsPrice(items);
 
   if (!items?.length) {
     return <CartEmpty />;
@@ -60,3 +60,5 @@ export const Cart = () => {
     </div>
   );
 };
+
+export default Cart;

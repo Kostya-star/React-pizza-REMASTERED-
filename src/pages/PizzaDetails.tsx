@@ -4,7 +4,7 @@ import { fetchPizzaById } from 'redux/slices/pizzaDetailsSlice';
 import { Status } from 'types/enum';
 import { useAppDispatch, useAppSelector } from './../redux/hooks';
 
-export const PizzaDetails = () => {
+const PizzaDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -43,3 +43,5 @@ export const PizzaDetails = () => {
     </>
   );
 };
+
+export default PizzaDetails
